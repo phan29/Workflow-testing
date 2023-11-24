@@ -35,7 +35,7 @@ jobs:
 
       - name: Build release APK
         run: |
-          ./gradlew assembleRelease
+          gradlew assembleRelease
           mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
 
       - name: Upload release APK
