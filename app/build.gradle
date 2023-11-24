@@ -1,7 +1,9 @@
+import com.android.build.gradle.internal.core.Abi
 plugins {
     id 'com.android.application'
 }
 
+def arch = properties["targetAbi"]
 android {
     compileSdk 32
 
@@ -24,6 +26,30 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    splits {
+        abi {
+            def onlyInclude = {abiTag ->
+                it.enable = true
+                reset()
+                include(abiTag)
+            }
+            switch (arch) {
+                case Abi.ARM64_V8A.tag:
+                    onlyInclude(Abi.ARM64_V8A.tag)
+                    break
+                case Abi.ARMEABI_V7A.tag:
+                    onlyInclude(Abi.ARMEABI_V7A.tag)
+                    break
+                case Abi.X86_64.tag:
+                    onlyInclude(Abi.X86_64.tag)
+                    break
+                case Abi.X86.tag:
+                    onlyInclude(Abi.X86.tag)
+                    break
+            }
+        }
     }
 }
 
