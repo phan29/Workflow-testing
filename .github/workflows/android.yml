@@ -31,20 +31,14 @@ jobs:
     - name: Create emulator
       run: echo no | avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64" -p $ANDROID_HOME/mid/avd
 
-    - name: List avds
-      run: avdmanager list
-
-    - name: list avds in tools
-      run: $ANDROID_HOME/tools/emulator ./emulator -list-avds
-
-    - name: list tools
-      run: ls $ANDROID_HOME/tools
-
     - name: Start emulator
       run: $ANDROID_HOME/mid/avd ./emulator -avd TestAVD -no-skin -no-audio -no-window &
 
     - name: Print devices
       run: avdmanager list avd
+
+    - name: Launch App
+      run: ./gradlew installDebug
 
     - name: Print devices 2
       run: adb devices
