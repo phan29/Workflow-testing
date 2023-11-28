@@ -23,11 +23,17 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       
-    - name: Build with Gradle
-      run: ./gradlew build
+    #- name: Build with Gradle
+     # run: ./gradlew build
+
+    - name: Launch emulator
+      uses: ReactiveCircus/android-emulator-runner@v2.28.0
+      with:
+        api-level: 30
+        script: ./gradlew installDebug
 
     - name: Upload logs
       uses: actions/upload-artifact@v2
       with:
         name: Log report
-        path: app/build/outputs
+        path: app/build/outputs/logs
