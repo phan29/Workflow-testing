@@ -31,7 +31,7 @@ jobs:
         $ANDROID_HOME/emulator/emulator-avd test -no-skin -no-audio -no-window &
 
     - name: Print devices
-      run: adb devices
+      run: avdmanager list
 
-    - name: Print logs
-      run: adb logcat
+    #- name: Print logs
+      #run: adb logcat
