@@ -30,10 +30,6 @@ jobs:
       run: |
         $ANDROID_HOME/emulator/emulator-avd test -no-skin -no-audio -no-window &
 
-    - name: Wait for emulator to start
-      run: |
-        chmod +x android-wait-for-emulator.sh
-
     - name: Print devices
       run: adb devices
 
