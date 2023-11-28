@@ -34,6 +34,9 @@ jobs:
     - name: Start emulator
       run: $ANDROID_HOME/mid/avd/emulator -avd TestAVD -no-skin -no-audio -no-window &
 
+    - name: Wait for launching emulator
+      run: adb wait-for-device
+
     - name: Print devices
       run: avdmanager list avd
 
