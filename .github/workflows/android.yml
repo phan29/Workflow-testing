@@ -25,4 +25,4 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
     - name: Upload logs
-      uses: actions/upload-articraft@v2
+      uses: actions/upload-artifact@v2
