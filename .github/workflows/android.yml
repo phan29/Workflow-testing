@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: set up JDK 17
+    - name: Setup Java
       uses: actions/setup-java@v3
       with:
         java-version: '17'
@@ -21,9 +21,21 @@ jobs:
         
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
-      #with:
-        #packages: ''
 
-    - name: create emulator
+    - name: Create emulator
       run: |
         echo avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis;x86" --device "Pixel_4"
+
+    - name: Start emulator
+      run: |
+        $ANDROID_HOME/emulator/emulator-avd test -no-skin -no-audio -no-window &
+
+    - name: Wait for emulator to start
+      run: |
+        chmod +x android-wait-for-emulator.sh
+
+    - name: Print devices
+      run: adb devices
+
+    - name: Print logs
+      run: adb logcat
