@@ -31,7 +31,6 @@ jobs:
       with:
         api-level: 29
         script: ./gradlew connectedCheck
-
     
     - run: ./adb logcat
 
