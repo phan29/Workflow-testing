@@ -35,7 +35,7 @@ jobs:
       run: $ANDROID_HOME/mid/avd/emulator -avd TestAVD -no-skin -no-audio -no-window &
 
     - name: Wait for launching emulator
-      run: adb wait-for-device
+      run: adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
 
     - name: Print devices
       run: avdmanager list avd
