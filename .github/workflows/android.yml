@@ -20,6 +20,7 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+        cache: gradle
         
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
@@ -28,12 +29,19 @@ jobs:
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
 
     - name: Create emulator
-      run: |
-        echo avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64" -p $ANDROID_HOME/mid/avd
+      run: echo no | avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64" -p $ANDROID_HOME/mid/avd
+
+    - name: List avds
+      run: avdmanager list
+
+    - name: list avds in tools
+      run: $ANDROID_HOME/tools/emulator ./emulator -list-avds
+
+    - name: list tools
+      run: ls $ANDROID_HOME/tools
 
     - name: Start emulator
-      run: |
-        $ANDROID_HOME/mid/avd ./emulator -avd TestAVD -no-skin -no-audio -no-window &
+      run: $ANDROID_HOME/mid/avd ./emulator -avd TestAVD -no-skin -no-audio -no-window &
 
     - name: Print devices
       run: avdmanager list avd
