@@ -12,7 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout the code
     - uses: actions/checkout@v3
+    
     - name: Setup Java
       uses: actions/setup-java@v3
       with:
@@ -31,7 +33,10 @@ jobs:
         $ANDROID_HOME/emulator/emulator-avd test -no-skin -no-audio -no-window &
 
     - name: Print devices
-      run: avdmanager list
+      run: avdmanager list device
 
     #- name: Print logs
       #run: adb logcat
+
+
+      
