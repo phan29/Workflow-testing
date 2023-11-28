@@ -33,7 +33,7 @@ jobs:
 
     - name: Start emulator
       run: |
-        avdmanager TestAVD -no-skin -no-audio -no-window &
+        ./emulator -avd TestAVD -no-skin -no-audio -no-window &
 
     - name: Print devices
       run: avdmanager list avd
