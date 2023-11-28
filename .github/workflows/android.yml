@@ -29,11 +29,11 @@ jobs:
 
     - name: Create emulator
       run: |
-        echo avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis;x86_64" --device "Pixel_4" 
+        echo avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis;x86_64" --device "Pixel_4" -p $ANDROID_HOME/mid/avd
 
     - name: Start emulator
       run: |
-        ./emulator -avd TestAVD -no-skin -no-audio -no-window &
+        $ANDROID_HOME/mid/avd ./emulator -avd TestAVD -no-skin -no-audio -no-window &
 
     - name: Print devices
       run: avdmanager list avd
