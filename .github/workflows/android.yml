@@ -24,16 +24,22 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
+    - name: Install system image
+      run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
+
     - name: Create emulator
       run: |
-        echo avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis;x86" --device "Pixel_4"
+        echo avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis;x86_64" --device "Pixel_4" 
 
     - name: Start emulator
       run: |
-        $ANDROID_HOME/emulator/emulator-avd test -no-skin -no-audio -no-window &
+        $ANDROID_HOME/emulator/emulator-avd TestAVD -no-skin -no-audio -no-window &
 
     - name: Print devices
-      run: avdmanager list device
+      run: avdmanager list
+
+    - name: Print devices 2
+      run: adb devices
 
     #- name: Print logs
       #run: adb logcat
