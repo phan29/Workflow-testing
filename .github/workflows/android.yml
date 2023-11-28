@@ -33,7 +33,7 @@ jobs:
         script: ./gradlew connectedCheck
 
     
-    #- run: ./adb logcat
+    - run: ./adb logcat
 
     #- name: Upload logs
      # uses: actions/upload-artifact@v2
