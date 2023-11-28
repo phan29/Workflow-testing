@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -20,20 +20,26 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+    #- name: Grant execute permission for gradlew
+     # run: chmod +x gradlew
       
     #- name: Build with Gradle
      # run: ./gradlew build
 
     - name: Launch emulator
-      uses: ReactiveCircus/android-emulator-runner@v2.28.0
+      uses: reactivecircus/android-emulator-runner@v2.25.0
       with:
         api-level: 30
-        script: ./gradlew installDebug
+        profile: Nexus 6
+        script: ./adb logcat 
 
-    - name: Upload logs
-      uses: actions/upload-artifact@v2
-      with:
-        name: Log report
-        path: app/build/outputs/logs
+    
+    #- run: ./adb logcat
+
+    #- name: Upload logs
+     # uses: actions/upload-artifact@v2
+      #with:
+       # name: Log report
+        #path: app/build/outputs/logs
+
+        
