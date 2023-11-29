@@ -38,7 +38,7 @@ jobs:
       run: sudo apt -y install libpulse-dev
 
     - name: install kvm
-      run: sudo apt install qemu-kvm
+      run: sudo apt-get update
     - run: sudo adduser $USER kvm
     - run: sudo chown $USER /dev/kvm
 
