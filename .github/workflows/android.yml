@@ -26,10 +26,10 @@ jobs:
       uses: android-actions/setup-android@v3
 
     - name: Install system image
-      run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
+      run: sdkmanager 'system-images;android-30;google_apis_playstore;x86_64'
 
     - name: Create emulator
-      run: echo no | avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64" -p $ANDROID_HOME/emulator
+      run: echo no | avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64" --force
 
     - name: list of avds
       run: avdmanager list avds
