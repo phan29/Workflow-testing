@@ -15,6 +15,9 @@ jobs:
   apk_build:
     name: Build APK
     runs-on: ubuntu-latest
+    strategy: 
+      matrix:
+        myVariable: ["x86","x86_64",""]
 
     steps:
       - name: Checkout to head branch
@@ -41,8 +44,8 @@ jobs:
 
       - name: Build release APK
         run: |
-          ./gradlew assembleRelease
-          mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
+          ./gradlew assembleRelease $myVariable
+          mv app/build/outputs/apk/release/app-$myVariable-release-unsigned.apk app/build/outputs/apk/release/release-base-apk-$myVariable.apk
 
       - name: Upload release APK
         uses: actions/upload-artifact@v3
