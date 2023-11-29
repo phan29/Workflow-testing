@@ -43,11 +43,11 @@ jobs:
     - run: sudo chown $USER /dev/kvm
 
     - name: Install system image
-      run: sdkmanager --install 'system-images;android-32;google_apis_playstore;x86_64'
+      run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
 
     - name: Create emulator
       run: echo "no" |
-        avdmanager create avd -n TestAVD -k "system-images;android-32;google_apis_playstore;x86_64"
+        avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64"
       
     - name: list of avds
       run: avdmanager list avds
@@ -57,6 +57,7 @@ jobs:
 
     - name: adb devices
       run: adb devices
+    - run: set -x QT_QPA_PLATFORM xcb && emulator @test_emulator
 
     - name: Start emulator
       #run: $ANDROID_HOME/emulator/emulator -avd TestAVD -no-audio &
