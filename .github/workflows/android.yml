@@ -28,11 +28,9 @@ jobs:
     - name: Install system image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
 
-    - name: list of avds
-      run: avdmanager list avds
-
     - name: Create emulator
-      run: echo no | avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64" -device "Pixel_4"
+      run: | 
+        avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64" --device "Pixel_4"
 
     - name: list of avds
       run: avdmanager list avds
