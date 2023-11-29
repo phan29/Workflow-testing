@@ -32,32 +32,23 @@ jobs:
       run: sdkmanager emulator
 
     - name: Install system image
-      run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86'
+      run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
 
     - name: Create emulator
       run: echo "no" |
-        avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86"
+        avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64"
       
     - name: list of avds
       run: avdmanager list avds
 
-    - name: home config avd path
-      run: ls $HOME/.android/avd/
-
-    - name: Print $ANDROID_AVD_HOME
-      run: echo $ANDROID_AVD_HOME
-
-    - name: Print $ANDROID_SDK_HOME
-      run: echo $ANDROID_SDK_HOME
-      
-    - name: Print $HOME
-      run: echo $HOME
-
     - name: list of emulator
       run: $ANDROID_HOME/emulator/emulator -list-avds
 
+    - name: adb devices
+      run: adb devices
+
     - name: Start emulator
-      run: $ANDROID_HOME/emulator/emulator -avd TestAVD
+      run: $ANDROID_HOME/emulator/emulator -avd TestAVD -no-audio &
 
     - name: Boot emulator
       run: adb shell getprop sys.boot_completed
