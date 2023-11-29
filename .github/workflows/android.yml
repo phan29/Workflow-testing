@@ -44,6 +44,12 @@ jobs:
     - name: Change env variable
       run: set HOME=/home/runner/.config
 
+    - name: Print $ANDROID_HOME_AVD
+      run: echo $ANDROID_HOME_AVD
+      
+    - name: Print $HOME
+      run: echo $HOME
+
     - name: home avd path
       run: ls $HOME/.android/avd/
 
