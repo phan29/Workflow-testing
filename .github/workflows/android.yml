@@ -35,8 +35,14 @@ jobs:
     - name: list of avds
       run: avdmanager list avds
 
-    - name: home avd path
+    - name: home config avd path
       run: ls $HOME/.config/.android/avd/
+
+    - name: move TestAVD to $HOME/.android/avd
+      run: move avd -n TestAVD -p $HOME/.android/avd
+
+    - name: home avd path
+      run: ls $HOME/.android/avd/
 
     - name: list of emulator
       run: $ANDROID_HOME/emulator/emulator -list-avds
