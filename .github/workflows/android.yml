@@ -42,7 +42,7 @@ jobs:
       run: avdmanager list avds
 
     - name: home config avd path
-      run: ls $HOME/.config/.android/avd/
+      run: ls $HOME/.android/avd/
 
     - name: Print $ANDROID_AVD_HOME
       run: echo $ANDROID_AVD_HOME
