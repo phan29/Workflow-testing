@@ -32,7 +32,7 @@ jobs:
       run: sdkmanager emulator
 
     - name: install additional packages
-      run: sdkmanager --install "platform-tools" "platforms;android-30"
+      run: sdkmanager platform-tools
 
     - name: Install system image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
