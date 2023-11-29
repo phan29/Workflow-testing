@@ -57,7 +57,7 @@ jobs:
 
     - name: adb devices
       run: adb devices
-    - run: set -x QT_QPA_PLATFORM xcb && emulator @test_emulator
+    - run: set -x QT_QPA_PLATFORM xcb && $ANDROID_HOME/emulator/emulator @TestAVD
 
     - name: Start emulator
       #run: $ANDROID_HOME/emulator/emulator -avd TestAVD -no-audio &
