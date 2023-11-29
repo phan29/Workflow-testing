@@ -56,9 +56,9 @@ jobs:
         echo "Starting emulator and waiting for boot to complete...."
         ls -la $ANDROID_HOME/emulator
         $ANDROID_HOME/tools/emulator -avd TestAVD -noaudio -no-window -no-boot-anim -camera-back none -camera-front none -memory 2048 2>&1 &
-        $ANDROID_HOME/platform-tools/adb wait-for-device 
-        echo "Emulator has finished booting"
-        $ANDROID_HOME/platform-tools/adb devices
+        #$ANDROID_HOME/platform-tools/adb wait-for-device 
+        #echo "Emulator has finished booting"
+        #$ANDROID_HOME/platform-tools/adb devices
         sleep 30
 
     - name: adb devices
