@@ -97,4 +97,26 @@ jobs:
         with:
           name: ${{ steps.getNameHead.outputs.value }}
           path: app/build/outputs/apk/release/${{ steps.getNameHead.outputs.value }}
+
+  apk_report:
+    name: APK report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: release-base-apk.apk
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: release-head-apk.apk
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: release-base-apk-arm64-v8a.apk
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: release-head-apk-arm64-v8a.apk
+    
       
