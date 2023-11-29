@@ -35,7 +35,7 @@ jobs:
       run: sdkmanager platform-tools
 
     - name: install apt-get install libpulse0:i386
-      run: sudo dpkg --add-architecture i386
+      run: sudo apt-get install ia32-libs
 
     - name: Install system image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
