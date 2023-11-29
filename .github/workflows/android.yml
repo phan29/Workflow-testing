@@ -82,8 +82,8 @@ jobs:
     - name: Print devices 2
       run: adb devices
 
-    #- name: Print logs
-      #run: adb logcat
+    - name: Print logs
+      run: adb logcat
 
 
       
