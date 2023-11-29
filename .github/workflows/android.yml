@@ -35,13 +35,13 @@ jobs:
       run: avdmanager list avds
 
     - name: home avd path
-      run: ls $HOME/.android/avd
+      run: ls /home/runner/.android/avd
 
     - name: ANDROID_AVD_HOME
       run: ls $ANDROID_AVD_HOME
 
     - name: ANDROID_SDK_HOME avd
-      run: ls $ANDROID_SDK_HOME/avd
+      run: ls $ANDROID_SDK_HOME
 
     - name: Start emulator
       run: $ANDROID_HOME/emulator/emulator -avd TestAVD -no-skin -no-audio -no-window & 
