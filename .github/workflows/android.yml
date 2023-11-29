@@ -24,6 +24,9 @@ jobs:
         
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
+      
+    - name: install additional packages
+      run: sdkmanager emulator
 
     - name: Install system image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86'
@@ -37,9 +40,12 @@ jobs:
 
     - name: home config avd path
       run: ls $HOME/.config/.android/avd/
+
+    - name: Print $HOME
+      run: echo $HOME
       
     - name: home avd path
-      run: ls $HOME/
+      run: ls $HOME/runners
 
     - name: move TestAVD to $HOME/.android/avd
       run: avdmanager move avd -n TestAVD -p $HOME/.android/avd
