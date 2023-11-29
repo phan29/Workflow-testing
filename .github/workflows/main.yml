@@ -44,7 +44,7 @@ jobs:
 
       - name: Build release APK
         run: |
-          ./gradlew assembleRelease -ptargetAbi=${{ matrix.myVariable }}
+          ./gradlew assembleRelease -PtargetAbi=${{ matrix.myVariable }}
           echo "myVariable: ${{ matrix.myVariable }}"
           mv app/build/outputs/apk/release/app-${{ matrix.myVariable }}-release-unsigned.apk app/build/outputs/apk/release/release-base-apk-${{ matrix.myVariable }}.apk
 
