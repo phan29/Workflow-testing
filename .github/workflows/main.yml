@@ -47,11 +47,11 @@ jobs:
         run: |
           ./gradlew assembleRelease -PtargetAbi=${{ matrix.myVariable }}
           echo "myVariable: ${{ matrix.myVariable }}"
-          mv if [ ${{ matrix.myVariable }} != "" ]
+          if [ ${{ matrix.myVariable }} != "" ]
           then 
-            app/build/outputs/apk/release/app-${{ matrix.myVariable }}-release-unsigned.apk app/build/outputs/apk/release/release-base-apk-${{ matrix.myVariable }}.apk
+            mv app/build/outputs/apk/release/app-${{ matrix.myVariable }}-release-unsigned.apk app/build/outputs/apk/release/release-base-apk-${{ matrix.myVariable }}.apk
           else
-            app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
+            mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
           fi
 
       - name: Upload release APK
