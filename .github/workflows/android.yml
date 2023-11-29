@@ -32,7 +32,7 @@ jobs:
       run: echo no | avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64" -p $ANDROID_HOME/mid/avd
 
     - name: Get files
-      run: cd $ANDROID_HOME/mid/avd
+      run: cd ANDROID_HOME/mid/avd
 
     - name: Start emulator
       run: $ANDROID_HOME/mid/avd ./emulator -avd TestAVD -no-skin -no-audio -no-window &
