@@ -18,7 +18,7 @@ jobs:
     strategy: 
       fail-fast: false
       matrix:
-        myVariable: ["arm64-v8a","x86","x86_64"]
+        myVariable: ["","arm64-v8a","armeabi-v7a","x86","x86_64"]
 
     steps:
       - name: Checkout to head branch
@@ -47,13 +47,18 @@ jobs:
         run: |
           ./gradlew assembleRelease -PtargetAbi=${{ matrix.myVariable }}
           echo "myVariable: ${{ matrix.myVariable }}"
-          mv app/build/outputs/apk/release/app-${{ matrix.myVariable }}-release-unsigned.apk app/build/outputs/apk/release/release-base-apk-${{ matrix.myVariable }}.apk
+          mv if [ ${{ matrix.myVariable }} != "" ]
+          then 
+            app/build/outputs/apk/release/app-${{ matrix.myVariable }}-release-unsigned.apk app/build/outputs/apk/release/release-base-apk-${{ matrix.myVariable }}.apk
+          else
+            app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
+          fi
 
       - name: Upload release APK
         uses: actions/upload-artifact@v3
         with:
-          name: release-base-apk.apk
-          path: app/build/outputs/apk/release/release-base-apk.apk
+          name: if [ ${{ matrix.myVariable }} != "" ] then release-base-apk-${{ matrix.myVariable }}.apk else release-base-apk.apk fi
+          path: if [ ${{ matrix.myVariable }} != "" ] then app/build/outputs/apk/release/release-base-apk-${{ matrix.myVariable }}.apk else app/build/outputs/apk/release/release-base-apk.apk fi
 
       # - name: Build release APK for ARM64_V8A
       #   run: |
