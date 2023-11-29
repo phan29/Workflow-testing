@@ -41,17 +41,14 @@ jobs:
     - name: home config avd path
       run: ls $HOME/.config/.android/avd/
 
-    - name: Change env variable
-      run: set HOME=/home/runner/.config
+    - name: Print $ANDROID_AVD_HOME
+      run: echo $ANDROID_AVD_HOME
 
-    - name: Print $ANDROID_HOME_AVD
-      run: echo $ANDROID_HOME_AVD
+    - name: Print $ANDROID_SDK_HOME
+      run: echo $ANDROID_SDK_HOME
       
     - name: Print $HOME
       run: echo $HOME
-
-    - name: home avd path
-      run: ls $HOME/.android/avd/
 
     - name: list of emulator
       run: $ANDROID_HOME/emulator/emulator -list-avds
