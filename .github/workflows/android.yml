@@ -29,7 +29,7 @@ jobs:
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
 
     - name: Create emulator
-      run: echo no | avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64"
+      run: echo no | avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64" -p $HOME/.android/avd
 
     - name: list of avds
       run: avdmanager list avds
@@ -38,7 +38,7 @@ jobs:
       run: ls ~/.config/.android/avd
 
     - name: Start emulator
-      run: $ANDROID_HOME/emulator/emulator -avd ~/.config/.android/avd/TestAVD -no-skin -no-audio -no-window & 
+      run: $ANDROID_HOME/emulator/emulator -avd TestAVD -no-skin -no-audio -no-window & 
 
     - name: Boot emulator
       run: adb shell getprop sys.boot_completed
