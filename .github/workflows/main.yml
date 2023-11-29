@@ -55,7 +55,7 @@ jobs:
           fi
 
       - name: getFile name
-        uses: actions/upload-artifact@v3
+        uses: haya14busa/action-cond@v1
         id: getName
         with:
           cond: ${{ matrix.myVariable != '' }} 
