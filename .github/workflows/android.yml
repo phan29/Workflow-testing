@@ -41,6 +41,9 @@ jobs:
     - name: home config avd path
       run: ls $HOME/.config/.android/avd/
 
+    - name: change HOME
+      run: export HOME=$HOME:/.config
+
     - name: Print $ANDROID_AVD_HOME
       run: echo $ANDROID_AVD_HOME
 
