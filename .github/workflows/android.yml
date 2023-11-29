@@ -38,7 +38,7 @@ jobs:
       run: ls ~/.config/.android/avd
 
     - name: Start emulator
-      run: ./emulator -avd TestAVD -no-skin -no-audio -no-window & 
+      run: $ANDROID_HOME/emulator/emulator -avd TestAVD -no-skin -no-audio -no-window & 
 
     - name: Boot emulator
       run: adb shell getprop sys.boot_completed
