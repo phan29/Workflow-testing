@@ -34,9 +34,6 @@ jobs:
     - name: install additional packages
       run: sdkmanager platform-tools
 
-    - name: install apt-get install libpulse0:i386
-      run: sudo apt-get install libpulse0:i386
-
     - name: Install system image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
 
@@ -58,7 +55,7 @@ jobs:
       run: |       
         echo "Starting emulator and waiting for boot to complete...."
         #ls -la $ANDROID_HOME/emulator
-        $ANDROID_HOME/emulator/emulator -avd TestAVD #-noaudio -no-window -no-boot-anim -camera-back none -camera-front none -memory 2048 2>&1 &
+        $ANDROID_HOME/emulator/emulator -avd TestAVD -noaudio -no-boot-anim -netdelay none -accel on $no_window -no-snapshot -memory 4096 -partition-size 4096 &
         #$ANDROID_HOME/platform-tools/adb wait-for-device 
         #echo "Emulator has finished booting"
         #$ANDROID_HOME/platform-tools/adb devices
