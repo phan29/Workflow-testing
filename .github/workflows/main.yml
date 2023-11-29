@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy: 
       matrix:
-        myVariable: ["x86","x86_64",""]
+        myVariable: ["arm64-v8a","x86","x86_64",""]
 
     steps:
       - name: Checkout to head branch
@@ -44,7 +44,7 @@ jobs:
 
       - name: Build release APK
         run: |
-          ./gradlew assembleRelease ${{ matrix.myVariable }}
+          ./gradlew assembleRelease -ptargetAbi=${{ matrix.myVariable }}
           echo "myVariable: ${{ matrix.myVariable }}"
           mv app/build/outputs/apk/release/app-${{ matrix.myVariable }}-release-unsigned.apk app/build/outputs/apk/release/release-base-apk-${{ matrix.myVariable }}.apk
 
@@ -54,15 +54,15 @@ jobs:
           name: release-base-apk.apk
           path: app/build/outputs/apk/release/release-base-apk.apk
 
-      - name: Build release APK for ARM64_V8A
-        run: |
-          ./gradlew assembleRelease -PtargetAbi=arm64-v8a
-          mv app/build/outputs/apk/release/app-arm64-v8a-release-unsigned.apk app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
+      # - name: Build release APK for ARM64_V8A
+      #   run: |
+      #     ./gradlew assembleRelease -PtargetAbi=arm64-v8a
+      #     mv app/build/outputs/apk/release/app-arm64-v8a-release-unsigned.apk app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
 
-      - name: Upload release APK for ARM64_V8A
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-base-arm64-v8a-apk.apk
-          path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
+      # - name: Upload release APK for ARM64_V8A
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: release-base-arm64-v8a-apk.apk
+      #     path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
         
       
