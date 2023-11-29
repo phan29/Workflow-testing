@@ -21,11 +21,10 @@ jobs:
         myVariable: ["","arm64-v8a","armeabi-v7a","x86","x86_64"]
 
     steps:
-      - name: Checkout to head branch
+      - name: Checkout PR base branch
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
+          ref: ${{ github.base_ref }}
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -43,7 +42,7 @@ jobs:
             /usr/local/lib/android/sdk/system-images
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
 
-      - name: Build release APK
+      - name: Build release base APK
         run: |
           ./gradlew assembleRelease -PtargetAbi=${{ matrix.myVariable }}
           echo "myVariable: ${{ matrix.myVariable }}"
@@ -54,29 +53,48 @@ jobs:
             mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
           fi
 
-      - name: getFile name
+      - name: getFile name for base
         uses: haya14busa/action-cond@v1
-        id: getName
+        id: getNameBase
         with:
           cond: ${{ matrix.myVariable != '' }} 
           if_true: release-base-apk-${{ matrix.myVariable }}.apk
           if_false: release-base-apk.apk
 
-      - name: Upload release APK
+      - name: Upload release APK for base branch
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ steps.getName.outputs.value }}
+          name: ${{ steps.getNameBase.outputs.value }}
           path: app/build/outputs/apk/release/${{ steps.getName.outputs.value }}
 
-      # - name: Build release APK for ARM64_V8A
-      #   run: |
-      #     ./gradlew assembleRelease -PtargetAbi=arm64-v8a
-      #     mv app/build/outputs/apk/release/app-arm64-v8a-release-unsigned.apk app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
+      - name: Checkout PR head branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch_depth: 0
 
-      # - name: Upload release APK for ARM64_V8A
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: release-base-arm64-v8a-apk.apk
-      #     path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
-        
+      - name: Build release head APK
+        run: |
+          ./gradlew assembleRelease -PtargetAbi=${{ matrix.myVariable }}
+          echo "myVariable: ${{ matrix.myVariable }}"
+          if [ ${{ matrix.myVariable }} != "" ]
+          then 
+            mv app/build/outputs/apk/release/app-${{ matrix.myVariable }}-release-unsigned.apk app/build/outputs/apk/release/release-head-apk-${{ matrix.myVariable }}.apk
+          else
+            mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-head-apk.apk
+          fi
+
+      - name: getFile name for head
+        uses: haya14busa/action-cond@v1
+        id: getNameHead
+        with:
+          cond: ${{ matrix.myVariable != '' }} 
+          if_true: release-head-apk-${{ matrix.myVariable }}.apk
+          if_false: release-head-apk.apk
+
+      - name: Upload release APK for head branch
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.getNameHead.outputs.value }}
+          path: app/build/outputs/apk/release/${{ steps.getNameHead.outputs.value }}
       
