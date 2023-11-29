@@ -55,7 +55,7 @@ jobs:
       run: |       
         echo "Starting emulator and waiting for boot to complete...."
         ls -la $ANDROID_HOME/emulator
-        $ANDROID_HOME/tools/emulator -avd TestAVD -noaudio -no-window -no-boot-anim -camera-back none -camera-front none -memory 2048 2>&1 &
+        $ANDROID_HOME/tools/emulator -avd TestAVD #-noaudio -no-window -no-boot-anim -camera-back none -camera-front none -memory 2048 2>&1 &
         #$ANDROID_HOME/platform-tools/adb wait-for-device 
         #echo "Emulator has finished booting"
         #$ANDROID_HOME/platform-tools/adb devices
@@ -64,8 +64,8 @@ jobs:
     - name: adb devices
       run: adb devices
 
-    #- name: Boot emulator
-     # run: adb shell getprop sys.boot_completed
+    - name: Boot emulator
+      run: adb shell getprop sys.boot_completed
 
     - name: Launch App
       run: ./gradlew installDebug
