@@ -29,7 +29,8 @@ jobs:
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86'
 
     - name: Create emulator
-      run: avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86"
+      run: |
+        avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86"
       
     - name: list of avds
       run: avdmanager list avds
