@@ -45,6 +45,7 @@ jobs:
       - name: Build release APK
         run: |
           ./gradlew assembleRelease $myVariable
+          echo "myVariable: $myVariable"
           mv app/build/outputs/apk/release/app-$myVariable-release-unsigned.apk app/build/outputs/apk/release/release-base-apk-$myVariable.apk
 
       - name: Upload release APK
