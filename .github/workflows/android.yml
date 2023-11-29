@@ -34,6 +34,9 @@ jobs:
     - name: install additional packages
       run: sdkmanager platform-tools
 
+    - name: install libpulse
+      run: sudo apt -y install libpulse-dev
+
     - name: Install system image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
 
