@@ -37,6 +37,9 @@ jobs:
 
     - name: home config avd path
       run: ls $HOME/.config/.android/avd/
+      
+    - name: home avd path
+      run: ls $HOME/.android/avd/
 
     - name: move TestAVD to $HOME/.android/avd
       run: avdmanager move avd -n TestAVD -p $HOME/.android/avd
