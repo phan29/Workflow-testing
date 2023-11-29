@@ -41,14 +41,8 @@ jobs:
     - name: home config avd path
       run: ls $HOME/.config/.android/avd/
 
-    - name: Print $HOME
-      run: echo $HOME
-      
-    - name: home avd path
-      run: ls $HOME/runners
-
-    - name: move TestAVD to $HOME/.android/avd
-      run: avdmanager move avd -n TestAVD -p $HOME/.android/avd
+    - name: Change env variable
+      run: set HOME=/home/runner/.config
 
     - name: home avd path
       run: ls $HOME/.android/avd/
