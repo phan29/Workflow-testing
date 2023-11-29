@@ -63,7 +63,7 @@ jobs:
       run: |       
         echo "Starting emulator and waiting for boot to complete...."
         #ls -la $ANDROID_HOME/emulator
-        $ANDROID_HOME/emulator/emulator -avd TestAVD -no-skin -no-audio -no-window
+        $ANDROID_HOME/emulator/emulator -avd TestAVD -no-skin -no-audio -no-window &
         #-noaudio -no-boot-anim -netdelay none -accel on -no-window -no-snapshot -memory 4096 -partition-size 4096
         $ANDROID_HOME/platform-tools/adb wait-for-device 
         echo "Emulator has finished booting"
