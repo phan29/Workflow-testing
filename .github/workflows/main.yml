@@ -14,7 +14,7 @@ env:
 jobs:
   apk_build:
     name: Build APK
-    runs-on: my-github-runner
+    runs-on: ubuntu-latest
     strategy: 
       matrix:
         myVariable: ["x86","x86_64",""]
