@@ -57,7 +57,7 @@ jobs:
 
     - name: adb devices
       run: adb devices
-    - run: sudo apt-get install qt5-default
+    - run: sudo apt-get install libx11-xcb1
 
     - name: Start emulator
       #run: $ANDROID_HOME/emulator/emulator -avd TestAVD -no-audio &
