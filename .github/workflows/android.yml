@@ -44,6 +44,8 @@ jobs:
     - run: sudo adduser $USER kvm
     - run: sudo kvm-ok
 
+    - run: sudo chmod 777 -R /dev/kvm
+
     - name: Check ownership of kvm
       run: ls -al /dev/kvm
 
