@@ -80,7 +80,8 @@ jobs:
         adb shell am start -n com.example.quizapp/.MainActivity    
 
     - name: Print logs
-      run: adb logcat | grep com.example.quizapp
+      run: |
+        adb logcat -e "com.example.quizapp"
 
 
       
