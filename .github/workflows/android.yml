@@ -1,0 +1,83 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  HOME: '/home/runner/.config'
+
+jobs:
+  bidder-token-gen-time:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
+    
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+        
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Install Additional packages - emulator
+      run: sdkmanager emulator
+
+    - name: Install additional packages - platform-tools
+      run: sdkmanager platform-tools
+
+    - name: Install libpulse
+      run: sudo apt -y install libpulse-dev
+
+    - name: Install and add user to kvm
+      run: sudo apt-get update
+    - run: sudo apt-get install qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils   
+    
+    - run: sudo adduser $USER kvm
+    - run: sudo kvm-ok
+
+    - name: Check ownership of kvm
+      run: ls -al /dev/kvm
+
+    - run: sudo chown $USER /dev/kvm 
+
+    - name: Install System Image
+      run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
+
+    - name: Create emulator
+      run: echo "no" |
+        avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64"
+
+    - name: Launch Emulator
+      #run: $ANDROID_HOME/emulator/emulator -avd TestAVD -no-audio &
+      run: |       
+        echo "Starting emulator and waiting for boot to complete...."
+        #ls -la $ANDROID_HOME/emulator
+        $ANDROID_HOME/emulator/emulator -avd TestAVD -no-skin -no-audio -no-window &
+        $ANDROID_HOME/platform-tools/adb wait-for-device 
+        echo "Emulator has finished booting"
+        adb devices
+
+    - name: Boot emulator
+      run: adb shell getprop sys.boot_completed
+
+    - name: Install App
+      run: |
+        ./gradlew installDebug  
+
+    - name: Launch App
+      run: |
+        sleep 2
+        adb shell am start -n com.example.quizapp/.MainActivity    
+
+    - name: Print logs
+      run: |
+        adb logcat | grep com.example.quizapp &
