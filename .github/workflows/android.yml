@@ -84,4 +84,4 @@ jobs:
         adb shell am start -n com.example.quizapp/.MainActivity    
 
     - name: Print logs
-      run: adb -s emulator-5554 logcat | grep "######" &
+      run: adb -s emulator-5554 logcat -s "######" &
