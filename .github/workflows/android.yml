@@ -41,7 +41,6 @@ jobs:
       run: |
         sudo apt-get update
         sudo adduser $USER kvm
-        sudo chown $USER /dev/kvm
 
     - name: Install System Image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
@@ -73,7 +72,8 @@ jobs:
       run: adb shell getprop sys.boot_completed
 
     - name: Install App
-      run: ./gradlew installDebug  
+      run: |
+        ./gradlew installDebug  
 
     - name: Launch App
       run: |
