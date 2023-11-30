@@ -82,7 +82,8 @@ def generate_size_diff_html(build_variant, base_apk_name, head_apk_name, start_i
 
     architectures_index = 0
     for i in range(start_index, start_index + 8, 2):
-        print(f"i: {i}, ith value: {sys.argv[i]}, (i+1)th value: {sys.argv[i+1]}")
+        print("i: ",i)
+        # print(f"i: {i}, ith value: {sys.argv[i]}, (i+1)th value: {sys.argv[i+1]}")
         base_apk_download_size = apk_size(f"{sys.argv[i]}.apk", 'download-size')
         head_apk_download_size = apk_size(f"{sys.argv[i + 1]}.apk", 'download-size')
         html += f"<tr><th>APK (Download Size for {architectures[architectures_index]} CPU Arch)</th><th>{format_size(base_apk_download_size)}</th><th>{format_size(head_apk_download_size)}</th><th>{format_size_with_indicator(head_apk_download_size - base_apk_download_size)}</th><th>{get_diff_in_percentage(head_apk_download_size - base_apk_download_size, base_apk_download_size)}</th></tr>"
