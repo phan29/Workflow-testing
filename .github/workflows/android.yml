@@ -40,8 +40,6 @@ jobs:
     - name: Install and add user to kvm
       run: sudo apt-get update
 
-    - run: systeminfo
-
     - run: egrep -c '(vmx|svm)' /proc/cpuinfo
     - run: kvm-ok 
     
