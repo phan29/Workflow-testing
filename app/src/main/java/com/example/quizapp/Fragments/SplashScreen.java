@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.example.quizapp.MainActivity;
 import com.example.quizapp.R;
 
+import android.util.Log;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,6 +49,7 @@ public class SplashScreen extends Fragment {
             public void run() {
 //                showing setup screen
                 SetupScreen setupScreen = new SetupScreen();
+                Log.d("#####", "Splash screen #run");
 //                activity.getSupportFragmentManager().popBackStack();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_activity, setupScreen).commit();
             }
