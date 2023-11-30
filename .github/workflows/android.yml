@@ -39,8 +39,8 @@ jobs:
 
     - name: Install and add user to kvm
       run: sudo apt-get update
-    - run: sudo adduser $USER kvm
-    - run: sudo chown $USER /dev/kvm
+        sudo adduser $USER kvm
+        sudo chown $USER /dev/kvm
 
     - name: Install System Image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
@@ -81,7 +81,7 @@ jobs:
 
     - name: Print logs
       run: |
-        adb logcat | grep com.example.quizapp
+        adb logcat | grep com.example.quizapp &
 
 
       
