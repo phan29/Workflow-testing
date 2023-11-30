@@ -49,7 +49,7 @@ public class SplashScreen extends Fragment {
             public void run() {
 //                showing setup screen
                 SetupScreen setupScreen = new SetupScreen();
-                Log.d("#####", "Splash screen #run")
+                Log.d("#####", "Splash screen #run");
 //                activity.getSupportFragmentManager().popBackStack();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_activity, setupScreen).commit();
             }
