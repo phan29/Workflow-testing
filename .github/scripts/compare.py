@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 # generate dictionary of the grouped contents of an apk file
 def get_apk_components(apk_file, size_type):
