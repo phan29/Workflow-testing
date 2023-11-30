@@ -42,13 +42,12 @@ jobs:
     - run: sudo apt-get install qemu-kvm    
     
     - run: sudo adduser $USER kvm
-    - run: sudo chmod 777 -R /dev/kvm
-    - run: sudo kvm-ok
+    #- run: sudo kvm-ok
 
-    - name: Check ownership of kvm
-      run: ls -al /dev/kvm
+    #- name: Check ownership of kvm
+      #run: ls -al /dev/kvm
 
-    - run: sudo chown $USER kvm 
+    - run: sudo chown -R $USER:$USER /dev/kvm 
 
     - name: Install System Image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
