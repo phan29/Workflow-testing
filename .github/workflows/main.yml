@@ -235,6 +235,5 @@ jobs:
       - name: Generate APK Size Report
         run: |
           chmod +x ./.github/scripts/compare.py
-          python3 ./.github/scripts/compare.py "release-base-apk" "release-head-apk" "release-base-apk-arm64-v8a" "release-head-apk-arm64-v8a" "release-base-apk-arm64-v8a" "release-head-apk-arm64-v8a" "release-base-apk-armeabi-v7a" "release-head-apk-armeabi-v7a"
-    
+          python3 ./.github/scripts/compare.py "release-base-apk" "release-head-apk" "release-base-apk-arm64-v8a" "release-head-apk-arm64-v8a" "release-base-apk-arm64-v8a" "release-head-apk-arm64-v8a" "release-base-apk-armeabi-v7a" "release-head-apk-armeabi-v7a" "release-base-apk-x86_64" "release-head-apk-x86_64" "release-base-apk-x86" "release-head-apk-x86" "debug-base-apk-arm64-v8a" "debug-head-apk-arm64-v8a" "debug-base-apk-armeabi-v7a" "debug-head-apk-armeabi-v7a" "debug-base-apk-x86_64" "debug-head-apk-x86_64" "debug-base-apk-x86" "debug-head-apk-x86"
       
