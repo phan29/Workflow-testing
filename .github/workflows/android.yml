@@ -41,7 +41,6 @@ jobs:
       run: sudo apt-get update
     
     - run: sudo adduser $USER kvm
-    - run: sudo kvm-ok
 
     - name: Check ownership of kvm
       run: ls -al /dev/kvm
