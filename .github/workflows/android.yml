@@ -40,12 +40,9 @@ jobs:
     - name: Install and add user to kvm
       run: sudo apt-get update
     
-    - run: sudo adduser $USER kvm
+    #- run: sudo adduser $USER kvm
 
-    - name: Check ownership of kvm
-      run: ls -al /dev/kvm
-
-    - run: sudo chown $USER /dev/kvm 
+    #- run: sudo chown $USER /dev/kvm 
 
     - name: Install System Image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
@@ -60,7 +57,7 @@ jobs:
         echo "Starting emulator and waiting for boot to complete...."
         #ls -la $ANDROID_HOME/emulator
         $ANDROID_HOME/emulator/emulator -avd TestAVD -no-skin -no-audio -no-window &
-        $ANDROID_HOME/platform-tools/adb wait-for-device 
+        #$ANDROID_HOME/platform-tools/adb wait-for-device 
         echo "Emulator has finished booting"
         adb devices
 
