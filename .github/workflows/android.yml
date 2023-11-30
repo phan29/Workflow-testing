@@ -81,7 +81,7 @@ jobs:
 
     - name: Print logs
       run: |
-        adb logcat -e "com.example.quizapp"
+        adb logcat -b main
 
 
       
