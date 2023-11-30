@@ -39,6 +39,8 @@ jobs:
 
     - name: Install and add user to kvm
       run: sudo apt-get update
+    - run: sudo apt install qemu-kvm
+    - run: sudo apt install virt-manager
 
     #- run: egrep -c '(vmx|svm)' /proc/cpuinfo
     #- run: kvm-ok 
