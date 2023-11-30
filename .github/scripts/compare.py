@@ -128,8 +128,12 @@ release_base_apk_name = sys.argv[1]
 release_head_apk_name = sys.argv[2]
 debug_base_apk_name = sys.argv[3]
 debug_head_apk_name = sys.argv[4]
+print(f"release_base_apk_name: {release_base_apk_name}")
+print(f"release_head_apk_name: {release_head_apk_name}")
+print(f"debug_base_apk_name: {debug_base_apk_name}")
+print(f"debug_head_apk_name: {debug_head_apk_name}")
 
-for i in range(5,21):
+for i in range(1,5):
     print(f"i: {i}, ith value: {sys.argv[i]}")
 
 # apk_analyzer_path location will change based on the GHA runner that you're using i.e. mac/windows/ubuntu etc
