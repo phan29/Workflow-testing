@@ -38,7 +38,8 @@ jobs:
       run: sudo apt -y install libpulse-dev
 
     - name: Install and add user to kvm
-      run: sudo apt-get update
+      run: |
+        sudo apt-get update
         sudo adduser $USER kvm
         sudo chown $USER /dev/kvm
 
