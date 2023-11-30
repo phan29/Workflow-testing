@@ -69,7 +69,7 @@ jobs:
 
       - name: Build debug APK for base branch
         run: |
-          ./gradlew test-app:assemble -PtargetAbi=${{ matrix.myVariable }}
+          ./gradlew app:assemble -PtargetAbi=${{ matrix.myVariable }}
           if [ ${{ matrix.myVariable }} != "" ]
           then
             mv app/build/outputs/apk/debug/app-${{ matrix.myVariable }}-debug.apk app/build/outputs/apk/debug/debug-base-apk-${{ matrix.myVariable }}.apk
@@ -144,7 +144,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.debugHeadApkName.outputs.value }}
-          path: test-app/build/outputs/apk/debug/${{ steps.debugHeadApkName.outputs.value }}
+          path: app/build/outputs/apk/debug/${{ steps.debugHeadApkName.outputs.value }}
 
   apk_report:
     name: APK report
