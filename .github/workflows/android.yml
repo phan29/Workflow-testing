@@ -40,12 +40,17 @@ jobs:
     - name: Install and add user to kvm
       run: sudo apt-get update
 
-    - run: egrep -c '(vmx|svm)' /proc/cpuinfo
-    - run: kvm-ok 
+    #- run: egrep -c '(vmx|svm)' /proc/cpuinfo
+    #- run: kvm-ok 
+    - name: Enable KVM group perms
+      run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
     
-    #- run: sudo adduser $USER kvm
+    - run: sudo adduser $USER kvm
 
-    #- run: sudo chown $USER /dev/kvm 
+    - run: sudo chown $USER /dev/kvm 
 
     - name: Install System Image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
