@@ -129,6 +129,9 @@ release_head_apk_name = sys.argv[2]
 debug_base_apk_name = sys.argv[3]
 debug_head_apk_name = sys.argv[4]
 
+for i in range(5,21):
+    print(f"i: {i}, ith value: {sys.argv[i]}")
+
 # apk_analyzer_path location will change based on the GHA runner that you're using i.e. mac/windows/ubuntu etc
 apk_analyzer_path = "/usr/local/lib/android/sdk/cmdline-tools/latest/bin/apkanalyzer"
 
