@@ -39,7 +39,6 @@ jobs:
 
     - name: Install and add user to kvm
       run: sudo apt-get update
-    - run: sudo apt-get install qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils   
     
     - run: sudo adduser $USER kvm
     - run: sudo kvm-ok
