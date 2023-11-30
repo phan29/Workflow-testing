@@ -28,37 +28,37 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
       
-    - name: install additional packages
+    - name: Install Additional packages - emulator
       run: sdkmanager emulator
 
-    - name: install additional packages
+    - name: Install additional packages - platform-tools
       run: sdkmanager platform-tools
 
-    - name: install libpulse
+    - name: Install libpulse
       run: sudo apt -y install libpulse-dev
 
-    - name: install kvm
+    - name: Install kvm
       run: sudo apt-get update
     - run: sudo adduser $USER kvm
     - run: sudo chown $USER /dev/kvm
 
-    - name: Install system image
+    - name: Install System Image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
 
     - name: Create emulator
       run: echo "no" |
         avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64"
       
-    - name: list of avds
+    - name: List of avds
       run: avdmanager list avds
 
-    - name: list of emulator
+    - name: List of emulator
       run: $ANDROID_HOME/emulator/emulator -list-avds
 
-    - name: adb devices
+    - name: List of devices using adb devices
       run: adb devices
 
-    - name: Start emulator
+    - name: Start Emulator
       #run: $ANDROID_HOME/emulator/emulator -avd TestAVD -no-audio &
       run: |       
         echo "Starting emulator and waiting for boot to complete...."
@@ -70,11 +70,16 @@ jobs:
         #$ANDROID_HOME/platform-tools/adb devices
         #sleep 30
 
-    - name: adb devices
+    - name: List of devices using adb devices
       run: adb devices
 
     - name: Boot emulator
       run: adb shell getprop sys.boot_completed
+
+    - name: Launch app
+      run: |
+        sleep 2
+        adb shell am start -n com.example.quizapp/com.example.quizapp.MainActivity  
 
     - name: Launch App
       run: ./gradlew installDebug
