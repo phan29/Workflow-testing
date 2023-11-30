@@ -39,6 +39,9 @@ jobs:
 
     - name: Install and add user to kvm
       run: sudo apt-get update
+      
+    - run: sudo apt install qemu-kvm      
+    
     - run: sudo adduser $USER kvm
 
     - name: Check ownership of kvm
