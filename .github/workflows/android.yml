@@ -37,7 +37,7 @@ jobs:
     - name: Install libpulse
       run: sudo apt -y install libpulse-dev
 
-    - name: Install kvm
+    - name: Install and add user to kvm
       run: sudo apt-get update
     - run: sudo adduser $USER kvm
     - run: sudo chown $USER /dev/kvm
@@ -58,34 +58,26 @@ jobs:
     - name: List of devices using adb devices
       run: adb devices
 
-    - name: Start Emulator
+    - name: Launch Emulator
       #run: $ANDROID_HOME/emulator/emulator -avd TestAVD -no-audio &
       run: |       
         echo "Starting emulator and waiting for boot to complete...."
         #ls -la $ANDROID_HOME/emulator
         $ANDROID_HOME/emulator/emulator -avd TestAVD -no-skin -no-audio -no-window &
-        #-noaudio -no-boot-anim -netdelay none -accel on -no-window -no-snapshot -memory 4096 -partition-size 4096
         $ANDROID_HOME/platform-tools/adb wait-for-device 
         echo "Emulator has finished booting"
-        #$ANDROID_HOME/platform-tools/adb devices
-        #sleep 30
-
-    - name: List of devices using adb devices
-      run: adb devices
+        adb devices
 
     - name: Boot emulator
       run: adb shell getprop sys.boot_completed
+
+    - name: Install App
+      run: ./gradlew installDebug
 
     - name: Launch App
       run: |
         sleep 2
         adb shell am start -n com.example.quizapp/com.example.quizapp.MainActivity  
-
-    - name: Install App
-      run: ./gradlew installDebug
-
-    - name: Print devices 2
-      run: adb devices
 
     - name: Print logs
       run: adb logcat &
