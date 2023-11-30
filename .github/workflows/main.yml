@@ -119,5 +119,10 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: release-head-apk-arm64-v8a.apk
+
+      - name: Generate APK Size Report
+        run: |
+          chmod +x ./.github/scripts/compare.py
+          python3 ./.github/scripts/compare.py "release-base-apk" "release-head-apk" "release-base-apk-arm64-v8a" "release-head-apk-arm64-v8a"
     
       
