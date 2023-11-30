@@ -38,9 +38,9 @@ jobs:
       run: sudo apt -y install libpulse-dev
 
     - name: Install and add user to kvm
-      run: |
-        sudo apt-get update
+      run: sudo apt-get update
         sudo adduser $USER kvm
+        sudo chown $USER /dev/kvm
 
     - name: Install System Image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
@@ -48,15 +48,6 @@ jobs:
     - name: Create emulator
       run: echo "no" |
         avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64"
-      
-    - name: List of avds
-      run: avdmanager list avds
-
-    - name: List of emulator
-      run: $ANDROID_HOME/emulator/emulator -list-avds
-
-    - name: List of devices using adb devices
-      run: adb devices
 
     - name: Launch Emulator
       #run: $ANDROID_HOME/emulator/emulator -avd TestAVD -no-audio &
