@@ -133,18 +133,18 @@ for i in range(5,21):
     print(f"i: {i}, ith value: {sys.argv[i]}")
 
 # apk_analyzer_path location will change based on the GHA runner that you're using i.e. mac/windows/ubuntu etc
-apk_analyzer_path = "/usr/local/lib/android/sdk/cmdline-tools/latest/bin/apkanalyzer"
+# apk_analyzer_path = "/usr/local/lib/android/sdk/cmdline-tools/latest/bin/apkanalyzer"
 
-kb_in_bytes = 1024
-mb_in_bytes = 1024 * 1024
+# kb_in_bytes = 1024
+# mb_in_bytes = 1024 * 1024
 
-html = "<html>"
-html += "<body><h1>APK Size Analysis Report</h1><h3>Affected Products</h3><ul>"
+# html = "<html>"
+# html += "<body><h1>APK Size Analysis Report</h1><h3>Affected Products</h3><ul>"
 
-architectures = ["ARM64_V8A", "ARMEABI_V7A", "X86_64", "X86"]
+# architectures = ["ARM64_V8A", "ARMEABI_V7A", "X86_64", "X86"]
 
-generate_size_diff_html("release", release_base_apk_name, release_head_apk_name, 5)
+# generate_size_diff_html("release", release_base_apk_name, release_head_apk_name, 5)
 
-generate_size_diff_html("debug", debug_base_apk_name, debug_head_apk_name, 13)
-html += "</ul></body></html>"
-update_size_diff_html()
+# generate_size_diff_html("debug", debug_base_apk_name, debug_head_apk_name, 13)
+# html += "</ul></body></html>"
+# update_size_diff_html()
