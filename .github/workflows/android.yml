@@ -71,13 +71,13 @@ jobs:
     - name: Boot emulator
       run: adb shell getprop sys.boot_completed
 
-    - name: Install App
-      run: ./gradlew installDebug
-
     - name: Launch App
       run: |
         sleep 2
         adb shell am start -n com.example.quizapp/.MainActivity  
+
+    - name: Install App
+      run: ./gradlew installDebug    
 
     - name: Print logs
       run: adb logcat &
