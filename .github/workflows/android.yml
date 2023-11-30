@@ -77,7 +77,7 @@ jobs:
     - name: Launch App
       run: |
         sleep 2
-        adb shell am start -n com.example.quizapp/com.example.quizapp.MainActivity  
+        adb shell am start -n com.example.quizapp/.MainActivity  
 
     - name: Print logs
       run: adb logcat &
