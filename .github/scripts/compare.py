@@ -1,3 +1,4 @@
+import sys
 # read arguments passed to this script
 release_base_apk_name = sys.argv[1]
 release_head_apk_name = sys.argv[2]
