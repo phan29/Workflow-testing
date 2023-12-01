@@ -58,7 +58,7 @@ jobs:
       - name: Upload release APK for ARM64_V8A
         uses: actions/upload-artifact@v3
         with:
-          name: release-base-arm64-v8a-apk.apk
+          name: release-base-apk-arm64-v8a.apk
           path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
 
   apk_size_analysis:
