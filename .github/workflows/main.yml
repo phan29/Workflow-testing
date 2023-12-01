@@ -9,7 +9,7 @@ on:
       - '*'
 
 env:
-  apk_size_analysis_report_file: apk_size_analyis_report.html
+  apk_size_analysis_report_file: apk_size_analysis_report.html
 
 jobs:
   apk_build:
