@@ -34,8 +34,8 @@ jobs:
     #- name: Install additional packages - platform-tools
     #  run: sdkmanager platform-tools
 
-    - name: Install libpulse
-      run: sudo apt -y install libpulse-dev
+    #- name: Install libpulse
+     # run: sudo apt -y install libpulse-dev
 
     - name: Install kvm
       run: |
