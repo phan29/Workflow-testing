@@ -31,8 +31,8 @@ jobs:
     #- name: Install Additional packages - emulator
     #  run: sdkmanager emulator
 
-    - name: Install additional packages - platform-tools
-      run: sdkmanager platform-tools
+    #- name: Install additional packages - platform-tools
+    #  run: sdkmanager platform-tools
 
     - name: Install libpulse
       run: sudo apt -y install libpulse-dev
@@ -87,4 +87,4 @@ jobs:
 
     - name: Print logs
       #run: adb -s emulator-5554 logcat -s "Splashscreen#newInstance", "Splashscreen#run" &
-      run: adb -s emulator-5554 logcat &
+      run: adb -s emulator-5554 logcat -s "######" &
