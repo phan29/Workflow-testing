@@ -60,5 +60,44 @@ jobs:
         with:
           name: release-base-arm64-v8a-apk.apk
           path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
-        
-      
+
+  apk_size_analysis:
+    needs: apk_build
+    name: APK Size Analysis Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: release-base-apk.apk
+      - uses: actions/download-artifact@v3
+        with:
+          name: release-base-arm64-v8a-apk.apk
+
+  pr_comment:
+    needs: apk_size_analysis
+    name: PR comment
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: release-base-apk.apk
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: release-base-apk-arm64-v8a.apk
+
+      - name: Generate APK Size Report
+        run: |
+          chmod +x ./.github/scripts/compare.py
+          python3 ./.github/scripts/compare.py
+
+      - name: Upload APK Size Report HTML File
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.apk_size_analysis_report_file }}
+          path: ${{ env.apk_size_analysis_report_file }}
