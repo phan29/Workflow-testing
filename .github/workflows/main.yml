@@ -53,13 +53,13 @@ jobs:
       - name: Build release APK for ARM64_V8A
         run: |
           ./gradlew assembleRelease -PtargetAbi=arm64-v8a
-          mv app/build/outputs/apk/release/app-arm64-v8a-release-unsigned.apk app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
+          mv app/build/outputs/apk/release/app-arm64-v8a-release-unsigned.apk app/build/outputs/apk/release/release-base-apk-arm64-v8a.apk
 
       - name: Upload release APK for ARM64_V8A
         uses: actions/upload-artifact@v3
         with:
           name: release-base-apk-arm64-v8a.apk
-          path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
+          path: app/build/outputs/apk/release/release-base-apk-arm64-v8a.apk
 
   apk_size_analysis:
     needs: apk_build
@@ -73,24 +73,7 @@ jobs:
           name: release-base-apk.apk
       - uses: actions/download-artifact@v3
         with:
-          name: release-base-arm64-v8a-apk.apk
-
-  pr_comment:
-    needs: apk_size_analysis
-    name: PR comment
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: release-base-apk.apk
-
-      - uses: actions/download-artifact@v3
-        with:
           name: release-base-apk-arm64-v8a.apk
-
       - name: Generate APK Size Report
         run: |
           chmod +x ./.github/scripts/compare.py
@@ -101,3 +84,31 @@ jobs:
         with:
           name: ${{ env.apk_size_analysis_report_file }}
           path: ${{ env.apk_size_analysis_report_file }}
+
+  pr_comment:
+    needs: apk_size_analysis
+    name: PR comment
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.apk_size_analysis_report_file }}
+
+      - name: Add PR Comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            try {
+              const filePath = 'apk_size_analysis_report.html'
+              const sizeReportContent = fs.readFileSync(filePath, 'utf8')
+              const result = await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: sizeReportContent
+              })
+              console.log(result)
+            } catch (error) {
+              console.error('Error reading file:', error);
