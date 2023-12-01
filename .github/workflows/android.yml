@@ -75,8 +75,8 @@ jobs:
 
     #-run: $ANDROID_HOME/platform-tools/adb wait-for-device 
 
-    - name: Boot emulator
-      run: adb shell getprop sys.boot_completed
+    #- name: Boot emulator
+     # run: adb shell getprop sys.boot_completed
 
     - name: Install App
       run: |
