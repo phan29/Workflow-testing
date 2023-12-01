@@ -40,9 +40,8 @@ jobs:
     #- run: sudo apt-get update
     #- run: sudo apt install qemu-kvm
 
-    - name: Install kvm
-      run: |
-        sudo apt install virt-manager
+    #- name: Install kvm
+     # run: sudo apt install virt-manager
 
     #- run: egrep -c '(vmx|svm)' /proc/cpuinfo
     #- run: kvm-ok 
