@@ -67,11 +67,13 @@ jobs:
       #run: $ANDROID_HOME/emulator/emulator -avd TestAVD -no-audio &
       run: |       
         echo "Starting emulator and waiting for boot to complete...."
-        #ls -la $ANDROID_HOME/emulator
         $ANDROID_HOME/emulator/emulator -avd TestAVD -no-skin -no-audio -no-window &
-        $ANDROID_HOME/platform-tools/adb wait-for-device 
         echo "Emulator has finished booting"
         adb devices
+    
+    # -run: ls -la $ANDROID_HOME/emulator
+
+    #-run: $ANDROID_HOME/platform-tools/adb wait-for-device 
 
     - name: Boot emulator
       run: adb shell getprop sys.boot_completed
