@@ -61,6 +61,34 @@ jobs:
           name: release-base-apk-arm64-v8a.apk
           path: app/build/outputs/apk/release/release-base-apk-arm64-v8a.apk
 
+      - name: Checkout head branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Build release head APK
+        run: |
+          ./gradlew assembleRelease
+          mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-head-apk.apk
+
+      - name: Upload release head APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-head-apk.apk
+          path: app/build/outputs/apk/release/release-head-apk.apk
+
+      - name: Build release head APK for ARM64_V8A
+        run: |
+          ./gradlew assembleRelease -PtargetAbi=arm64-v8a
+          mv app/build/outputs/apk/release/app-arm64-v8a-release-unsigned.apk app/build/outputs/apk/release/release-head-apk-arm64-v8a.apk
+
+      - name: Upload release APK for ARM64_V8A
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-head-apk-arm64-v8a.apk
+          path: app/build/outputs/apk/release/release-head-apk-arm64-v8a.apk
+
   apk_size_analysis:
     needs: apk_build
     name: APK Size Analysis Report
@@ -74,6 +102,12 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: release-base-apk-arm64-v8a.apk
+      - uses: actions/download-artifact@v3
+        with:
+          name: release-head-apk.apk
+      - uses: actions/download-artifact@v3
+        with:
+          name: release-head-apk-arm64-v8a.apk
       - name: Generate APK Size Report
         run: |
           chmod +x ./.github/scripts/compare.py
