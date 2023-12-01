@@ -79,13 +79,10 @@ jobs:
      # run: adb shell getprop sys.boot_completed
 
     - name: Install App
-      run: |
-        ./gradlew installDebug  
+      run: ./gradlew installDebug  
 
     - name: Launch App
-      run: |
-        sleep 2
-        adb shell am start -n com.example.quizapp/.MainActivity    
+      run: adb shell am start -n com.example.quizapp/.MainActivity    
 
     - name: Print logs
       #run: adb -s emulator-5554 logcat -s "Splashscreen#newInstance", "Splashscreen#run" &
