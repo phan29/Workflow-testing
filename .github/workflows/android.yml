@@ -51,10 +51,10 @@ jobs:
           #sudo udevadm control --reload-rules
           #sudo udevadm trigger --name-match=kvm
 
-    #- name: Add user to kvm and change ownership
-      #run: |
-        #sudo adduser $USER kvm
-        #sudo chown $USER /dev/kvm 
+    - name: Add user to kvm and change ownership
+      run: |
+        sudo adduser $USER kvm
+        sudo chown $USER /dev/kvm 
 
     - name: Install System Image
       run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
