@@ -151,6 +151,6 @@ architectures = ["arm64-v8a"]
 
 generate_size_diff_html("release", release_base_apk_name, release_head_apk_name)
 
-generate_size_diff_html("debug", debug_base_apk_name, debug_head_apk_name)
+# generate_size_diff_html("debug", debug_base_apk_name, debug_head_apk_name)
 html += "</ul></body></html>"
 update_size_diff_html()
