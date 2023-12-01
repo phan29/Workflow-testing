@@ -37,9 +37,10 @@ jobs:
     #- name: Install libpulse
      # run: sudo apt -y install libpulse-dev
 
+    #- run: sudo apt-get update
+
     - name: Install kvm
       run: |
-        #sudo apt-get update
         sudo apt install qemu-kvm
         sudo apt install virt-manager
 
