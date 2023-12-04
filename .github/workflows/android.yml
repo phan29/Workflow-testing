@@ -43,7 +43,7 @@ jobs:
     - name: Install kvm
       run: sudo apt install virt-manager
 
-    #- run: egrep -c '(vmx|svm)' /proc/cpuinfo
+    - run: egrep '^flags.*(vmx|svm)' /proc/cpuinfo
     #- run: kvm-ok 
     - name: Enable KVM group perms
       run: |
