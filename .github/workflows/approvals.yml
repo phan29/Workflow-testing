@@ -1,36 +1,36 @@
-# This workflow will set a number or reviewers depending on the labels
-name: Label Reviews
-# Trigger the workflow on pull requests
-# PAT  : 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
-#             Update: ${{ vars.REVIEWERS }}
-on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
-      - labeled
-      - unlabeled
-  pull_request_review:
-    types:
-      - submitted
-      - edited
-      - dismissed
-jobs:
-  require-reviewers:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Require-reviewers
-        uses: travelperk/label-requires-reviews-action@1.3.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          rules_yaml: | # define which PR labels require how many aprroving reviewers
-            requested_reviewers: ${{ toJson(github.event.pull_request.requested_reviewers) }}
-            run: |
-            echo "$requested_reviewers"
-            LL=$(echo $requested_reviewers | jq '. | length' )
-            echo "::set-output name=reviewer_length::$LL"
-            Update: steps.getlegth.outputs.reviewer_length
+# # This workflow will set a number or reviewers depending on the labels
+# name: Label Reviews
+# # Trigger the workflow on pull requests
+# # PAT  : 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
+# #             Update: ${{ vars.REVIEWERS }}
+# on:
+#   pull_request:
+#     types:
+#       - opened
+#       - reopened
+#       - synchronize
+#       - labeled
+#       - unlabeled
+#   pull_request_review:
+#     types:
+#       - submitted
+#       - edited
+#       - dismissed
+# jobs:
+#   require-reviewers:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Require-reviewers
+#         uses: travelperk/label-requires-reviews-action@1.3.0
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           rules_yaml: | # define which PR labels require how many aprroving reviewers
+#             requested_reviewers: ${{ toJson(github.event.pull_request.requested_reviewers) }}
+#             run: |
+#             echo "$requested_reviewers"
+#             LL=$(echo $requested_reviewers | jq '. | length' )
+#             echo "::set-output name=reviewer_length::$LL"
+#             Update: steps.getlegth.outputs.reviewer_length
           
   
