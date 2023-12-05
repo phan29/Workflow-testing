@@ -27,6 +27,8 @@ jobs:
         
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
+
+    - run: ls $ANDROID_HOME
       
     #- name: Install Additional packages - emulator
     #  run: sdkmanager emulator
