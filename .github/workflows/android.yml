@@ -5,14 +5,10 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
-env:
-  HOME: '/home/runner/.config'
-
 jobs:
   bidder-token-gen-time:
 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - name: Checkout the code
@@ -25,61 +21,21 @@ jobs:
         distribution: 'temurin'
         cache: gradle
         
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
+    - name: Run emulator, install & launch app and get logs
+      uses: ReactiveCircus/android-emulator-runner@v2
+      with: 
+        api-level: 30
+        target: google_apis
+        arch: x86_64
+        emulator-options: -no-window -no-audio -no-skin
+        script: |
+          ./gradlew installDebug
+          sleep 2
+          adb shell am start -n com.example.quizapp/.MainActivity | adb logcat com.example.quizapp >> app/emulator.log &
 
-    - run: ls $ANDROID_HOME
-      
-    #- name: Install Additional packages - emulator
-    #  run: sdkmanager emulator
-
-    #- name: Install additional packages - platform-tools
-    #  run: sdkmanager platform-tools
-
-    #- name: Install libpulse
-     # run: sudo apt -y install libpulse-dev
-
-    - run: sudo apt-get update
-    - run: sudo apt install qemu-kvm
-
-    - name: Install kvm
-      run: sudo apt install virt-manager
-
-    - run: egrep '^flags.*(vmx|svm)' /proc/cpuinfo
-    #- run: kvm-ok 
-    - name: Enable KVM group perms
-      run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-
-    - name: Add user to kvm and change ownership
-      run: |
-        sudo adduser $USER kvm
-        sudo chown $USER /dev/kvm 
-    - name: Install System Image
-      run: sdkmanager --install 'system-images;android-30;google_apis_playstore;x86_64'
-
-    - name: Create emulator
-      run: echo "no" |
-        avdmanager create avd -n TestAVD -k "system-images;android-30;google_apis_playstore;x86_64"
-
-    - name: Launch Emulator
-      run: |       
-        echo "Starting emulator and waiting for boot to complete...."
-        $ANDROID_HOME/emulator/emulator -avd TestAVD -no-skin -no-audio -no-window &
-        echo "Emulator has finished booting"
-        adb devices
-    
-    #- name: Boot emulator
-     # run: adb shell getprop sys.boot_completed
-
-    - name: Install App
-      run: ./gradlew installDebug  
-
-    - name: Launch App
-      run: adb shell am start -n com.example.quizapp/MainActivity    
-
-    - name: Print logs
-      #run: adb -s emulator-5554 logcat -s "Splashscreen#newInstance", "Splashscreen#run" &
-      run: adb -s emulator-5554 logcat -s "######" &
+    - name: Upload logs
+      uses: actions/upload-artifact@v2 
+      with:
+        name: logs
+        path: app/emulator.log
+          
