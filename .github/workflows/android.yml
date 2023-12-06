@@ -34,8 +34,8 @@ jobs:
           touch app/emulator.log
           chmod 777 app/emulator.log
           adb logcat com.example.quizapp >> app/emulator.log & 
-          sleep 2
           adb shell am start -n com.example.quizapp/.MainActivity
+          sleep 100
 
     - name: Upload logs
       uses: actions/upload-artifact@v2 
