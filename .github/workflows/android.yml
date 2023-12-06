@@ -30,8 +30,12 @@ jobs:
         emulator-options: -no-window -no-audio -no-skin
         script: |
           ./gradlew installDebug
+          adb logcat -c
+          touch app/emulator.log
+          chmod 777 app/emulator.log
+          adb logcat com.example.quizapp >> app/emulator.log & 
           sleep 2
-          adb shell am start -n com.example.quizapp/.MainActivity | adb logcat com.example.quizapp >> app/emulator.log &
+          adb shell am start -n com.example.quizapp/.MainActivity
 
     - name: Upload logs
       uses: actions/upload-artifact@v2 
