@@ -38,8 +38,34 @@ jobs:
           sleep 100
 
     - name: Upload logs
-      uses: actions/upload-artifact@v2 
+      uses: actions/upload-artifact@v3
       with:
         name: logs
         path: app/emulator.log
+
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: logs
+
+    - name: Run script
+      uses: actions/github-script@v6
+      with:
+        script: |
+          awk -F":" '
+          FNR==1{
+            split($0,a,":");
+            sec1=a[1]*3600+a[2]*60+a[3]
+          }
+          FNR==2{
+            split($0,b,":");
+            sec2=b[1]*3600+b[2]*60+b[3];
+            val=sec2-sec1;
+            ho=int(val/3600);
+            val=val%3600;
+            mi=sprintf("%02d",(val/60));
+            val=val%60;
+            print ho":"mi":"val
+          }
+          '   logs
           
