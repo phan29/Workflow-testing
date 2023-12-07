@@ -49,4 +49,4 @@ jobs:
         end_time=$(grep "Splashscreen#onAttach" app/emulator.log | awk '{print $2}')
         echo "$start_time"
         echo "$end_time"
-        echo "${"date -d" ' $start_time ' " +%s "} - ${"date -d" ' $end_time ' " +%s "}"
+        echo "$($("date -d" ' $start_time ' " +%s ") - $("date -d" ' $end_time ' " +%s "))"
