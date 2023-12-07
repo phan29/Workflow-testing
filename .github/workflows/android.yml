@@ -49,4 +49,8 @@ jobs:
         name: logs
 
     - name: Run script
-      run: grep "Splashscreen#newInstance" app/emulator.log
+      run: |
+        grep "Splashscreen#newInstance" app/emulator.log | awk -v start_time=$2
+        grep "Splashscreen#onAttach" app/emulator.log | awk -v end_time=$2
+        echo "$start_time"
+        echo "$end_time"
