@@ -45,7 +45,7 @@ jobs:
 
     - name: Run script
       run: |
-        start_time=${grep "Splashscreen#newInstance" app/emulator.log | cut -d ' ' -f 2}
-        end_time=${grep "Splashscreen#onAttach" app/emulator.log | cut -d ' ' -f 2}
+        start_time=$(grep "Splashscreen#newInstance" app/emulator.log | awk '{print $2}')
+        end_time=$(grep "Splashscreen#onAttach" app/emulator.log | awk '{print $2}')
         echo "$start_time"
         echo "$end_time"
