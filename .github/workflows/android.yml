@@ -45,10 +45,25 @@ jobs:
 
     - name: Run script
       run: |
-        start_time=$(grep "Splashscreen#newInstance" app/emulator.log | awk '{print $2}')
-        end_time=$(grep "Splashscreen#onAttach" app/emulator.log | awk '{print $2}')
-        echo "$start_time"
-        echo "$end_time"
-        st="date -d" ' start_time ' " +%s"; st ; close(st);
-        ed="date -d" ' end_time ' " +%s"; ed ;   close(ed)
+        a=$(grep "Splashscreen#newInstance" app/emulator.log | awk '{print $2}')
+        b=$(grep "Splashscreen#onAttach" app/emulator.log | awk '{print $2}')
+        echo "$a"
+        echo "$b"
+        awk -F":" '
+        FNR==1{
+          split(a,":");
+          sec1=a[1]*3600+a[2]*60+a[3]
+        }
+        FNR==2{
+          split(b,":");
+          sec2=b[1]*3600+b[2]*60+b[3];
+          val=sec2-sec1;
+          print val
+          ho=int(val/3600);
+          val=val%3600;
+          mi=sprintf("%02d",(val/60));
+          val=val%60;
+          print ho":"mi":"val
+        }
+        '
         echo "$($ed - $st)"
