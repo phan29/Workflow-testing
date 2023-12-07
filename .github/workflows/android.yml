@@ -50,10 +50,5 @@ jobs:
 
     - name: Run script
       run: |
-        read -ra file_parts <<< "$logs"
-        for line in $file_parts; do
-          start=$($line | grep "Splashscreen#newInstance")
-          end=$($line | grep "Splashscreen#onAttach")
-        done
-        echo "$start"
-        echo "$end"
+       grep "Splashscreen#newInstance" /app/emulator.log
+       grep "Splashscreen#onAttach" /app/emulator.log
