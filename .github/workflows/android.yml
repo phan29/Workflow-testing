@@ -49,15 +49,11 @@ jobs:
         name: logs
 
     - name: Run script
-      uses: actions/github-script@v6
-      with:
-        script: |
-          awk -v start='Splashscreen#newInstance' -v end='Splashscreen#onAttach' -v q="'" '
-          BEGIN{
-            st="date -d" q start q " +%s"; st |getline start; close(st);
-            ed="date -d" q end   q " +%s"; ed |getline end;   close(ed)
-            diff=$(ed - st)
-            print diff
-          }
-          ' app/emulator.log
-          
+      run: |
+        read -ra file_parts <<< "$logs"
+        for line in $file_parts; do
+          start=$($line | grep "Splashscreen#newInstance")
+          end=$($line | grep "Splashscreen#onAttach")
+        done
+        echo "$start"
+        echo "$end"
