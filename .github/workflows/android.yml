@@ -49,6 +49,4 @@ jobs:
         name: logs
 
     - name: Run script
-      run: |
-       grep "Splashscreen#newInstance" $logs
-       grep "Splashscreen#onAttach" app/emulator.log
+      run: grep "Splashscreen#newInstance" app/emulator.log
