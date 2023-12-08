@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        archs: ["", "x86"]
+        archs: ["", "x86","x86_64"]
         proguardVersions: ["true", "false"]
 
     steps:
@@ -47,13 +47,26 @@ jobs:
       - name: Build release APK
         run: |
           ./gradlew assembleRelease -PtargetAbi=${{ matrix.archs }} -PminifyEnabled=${{ matrix.proguardVersions }}
-          mv app/build/outputs/apk/release/app-${{ matrix.archs }}-release-unsigned.apk app/build/outputs/apk/release/release-base-apk-${{ matrix.archs }}.apk
+          if [ ${{ matrix.archs }} != "" ]
+          then
+            mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
+          else
+            mv app/build/outputs/apk/release/app-${{ matrix.archs }}-release-unsigned.apk app/build/outputs/apk/release/release-base-apk-${{ matrix.archs }}.apk
+          fi
+
+      - name: APK name
+        uses: haya14busa/action-cond@v1
+        id: apk_name
+        with:
+          cond: ${{ matrix.archs != '' }}
+          if_true: release-base-apk-${{ matrix.archs }}.apk
+          if_false: release-base-apk.apk
 
       - name: Upload release APK
         uses: actions/upload-artifact@v3
         with:
-          name: release-base-apk.apk
-          path: app/build/outputs/apk/release/release-base-apk-${{ matrix.archs }}.apk
+          name: ${{ steps.apk_name.outputs.value }}
+          path: app/build/outputs/apk/release/${{ steps.apk_name.outputs.value }}
 
       # - name: Build release APK for ARM64_V8A
       #   run: |
