@@ -4,6 +4,7 @@ plugins {
     id 'com.android.application'
 }
 def arch = properties["targetAbi"]
+def isMinificationEnabled = properties["minifyEnabled"] == "false" ? false : true
 
 android {
     compileSdk 32
@@ -20,7 +21,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            setMinifyEnabled(isMinificationEnabled)
+            shrinkResources(isMinificationEnabled)
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
