@@ -15,6 +15,11 @@ jobs:
   apk_build:
     name: Build APK
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        archs: ["", "x86"]
+        proguardVersions: ["true", "false"]
 
     steps:
       - name: Checkout to head branch
@@ -41,24 +46,24 @@ jobs:
 
       - name: Build release APK
         run: |
-          ./gradlew assembleRelease
-          mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
+          ./gradlew assembleRelease -PtargetAbi=${{ matrix.archs }} -PminifyEnabled=${{ matrix.proguardVersions }}
+          mv app/build/outputs/apk/release/app-${{ matrix.archs }}-release-unsigned.apk app/build/outputs/apk/release/release-base-apk-${{ matrix.archs }}.apk
 
       - name: Upload release APK
         uses: actions/upload-artifact@v3
         with:
           name: release-base-apk.apk
-          path: app/build/outputs/apk/release/release-base-apk.apk
+          path: app/build/outputs/apk/release/release-base-apk-${{ matrix.archs }}.apk
 
-      - name: Build release APK for ARM64_V8A
-        run: |
-          ./gradlew assembleRelease -PtargetAbi=arm64-v8a
-          mv app/build/outputs/apk/release/app-arm64-v8a-release-unsigned.apk app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
+      # - name: Build release APK for ARM64_V8A
+      #   run: |
+      #     ./gradlew assembleRelease -PtargetAbi=arm64-v8a
+      #     mv app/build/outputs/apk/release/app-arm64-v8a-release-unsigned.apk app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
 
-      - name: Upload release APK for ARM64_V8A
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-base-arm64-v8a-apk.apk
-          path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
+      # - name: Upload release APK for ARM64_V8A
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: release-base-arm64-v8a-apk.apk
+      #     path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
         
       
