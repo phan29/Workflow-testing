@@ -2,8 +2,9 @@
 
 
 <details>
-  <summary>
-     Testing summary
-  </summary>
-  Testingdetails
+  <summary> See Example below </summary>
+    *To build [signal-collection](signal-collection) module:*
+    ```shell
+    $ .gradlew :signal-collection
+    ```
 </details>
