@@ -57,7 +57,7 @@ jobs:
 
     - name: Run script
       run: |
-        files={app/emulator.log, app/emulator_next.log}
+        files={$cold_logs, $warm_logs}
         for file in $files; do
           start_time=$(grep "Splashscreen#newInstance" $file | awk '{print $2}')
           echo $start_time
