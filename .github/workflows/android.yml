@@ -49,13 +49,11 @@ jobs:
         echo $start_time
         end_time=$(grep "Splashscreen#onAttach" app/emulator.log | awk '{print $2}')
         echo $end_time
-        time_diff=$(awk '
-          BEGIN {
+        time_diff=$(awk 'BEGIN {
             split(st,a,":");
             sec1=a[1]*3600+a[2]*60+a[3];
             split(ed,b,":");
             sec2=b[1]*3600+b[2]*60+b[3];
             val=sec2-sec1;
-            print val
-          }' st=$start_time ed=$end_time)
+            print val }' st=$start_time ed=$end_time)
         echo "$time_diff"
