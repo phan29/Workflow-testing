@@ -57,7 +57,7 @@ jobs:
 
     - name: Run script
       run: |
-        files=[$cold_logs, $warm_logs]
+        files=($cold_logs $warm_logs)
         for file in $files; do
           start_time=$(grep "Splashscreen#newInstance" $file | awk '{print $2}')
           echo $start_time
