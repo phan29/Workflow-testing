@@ -49,9 +49,9 @@ jobs:
           ./gradlew assembleRelease -PtargetAbi=${{ matrix.archs }} -PminifyEnabled=${{ matrix.proguardVersions }}
           if [ ${{ matrix.archs }} != "" ]
           then
-            mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
-          else
             mv app/build/outputs/apk/release/app-${{ matrix.archs }}-release-unsigned.apk app/build/outputs/apk/release/release-base-apk-${{ matrix.archs }}.apk
+          else
+            mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
           fi
 
       - name: APK name
