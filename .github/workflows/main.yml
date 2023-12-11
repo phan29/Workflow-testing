@@ -10,6 +10,8 @@ on:
 
 env:
   apk_size_analysis_report_file: apk_size_analyis_report.html
+  new_apk_size: 0
+  old_apk_size: 0
 
 jobs:
   apk_build:
@@ -60,5 +62,12 @@ jobs:
         with:
           name: release-base-arm64-v8a-apk.apk
           path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
+
+      - name: A/B check
+        if: ${{ new_apk_size }} != ${{ old_apk_size }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed('new_apk_size and old_apk_size are not same')
         
       
