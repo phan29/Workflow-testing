@@ -63,6 +63,7 @@ jobs:
         do
           start_time=$(grep "Splashscreen#newInstance" $file | awk '{print $2}')
           end_time=$(grep "Splashscreen#onAttach" $file | awk '{print $2}')
+          echo "$start_time $end_time"
           time_diff=$(st="$start_time" ed="$end_time" awk 'END {
             split(st,a,":");
             sec1=a[1]*3600+a[2]*60+a[3];
@@ -71,6 +72,7 @@ jobs:
             val=sec2-sec1;
             print val 
           }')
+          echo $time_diff
           table_string+="$time_diff,"
           echo "Table string: $table_string"
         done
