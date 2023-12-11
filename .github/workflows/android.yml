@@ -36,7 +36,7 @@ jobs:
           adb logcat com.example.quizapp >> app/emulator.log & 
           adb shell am start -n com.example.quizapp/.MainActivity
           sleep 30
-          adb shell am kill com.example.quizapp
+          adb shell am force-stop com.example.quizapp
           adb logcat -c
           touch app/emulator_next.log
           chmod 777 app/emulator_next.log
