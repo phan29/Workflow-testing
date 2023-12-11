@@ -10,7 +10,7 @@ on:
 
 env:
   apk_size_analysis_report_file: apk_size_analyis_report.html
-  apk_size_data: apk_size_data.txt
+  
 
 jobs:
   apk_build:
@@ -40,6 +40,11 @@ jobs:
             /usr/local/lib/android/sdk/system-images
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
 
+      - name: Set the variables
+        run: |
+          echo "{old_apk_size}={0}" >> $GITHUB_ENV
+          echo "{new_apk_size}={0}" >> $GITHUB_ENV
+
       - name: Build release APK
         run: |
           ./gradlew assembleRelease
@@ -61,6 +66,17 @@ jobs:
         with:
           name: release-base-arm64-v8a-apk.apk
           path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
+
+      - name: Run python script
+        run: |
+          chmod +x ./.github/scripts/temp.py
+          python3 ./.github/scripts/temp.py
+
+      - name: Print the variables
+        run: |
+          echo "old-size: ${{ env.old_apk_size }}"
+          echo "new-size: ${{ env.new_apk_size }}"
+          
 
       - name: A/B check
         if: ${{ new_apk_size }} != ${{ old_apk_size }}
