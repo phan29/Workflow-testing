@@ -71,7 +71,8 @@ jobs:
             split(ed,b,":");
             sec2=b[1]*3600+b[2]*60+b[3];
             val=sec2-sec1;
-            print val }' st=$start_time ed=$end_time)
+            print val 
+          }' st=$start_time ed=$end_time)
           table_string+="$time_diff,"
           echo "Table string: $table_string"
         done
