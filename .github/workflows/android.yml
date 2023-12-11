@@ -57,6 +57,7 @@ jobs:
 
     - name: Run script
       run: |
+        brew install gawk
         files=("app/emulator.log" "app/emulator_next.log")
         table_string=""
         for file in $files;
