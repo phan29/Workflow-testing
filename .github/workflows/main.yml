@@ -10,8 +10,7 @@ on:
 
 env:
   apk_size_analysis_report_file: apk_size_analyis_report.html
-  new_apk_size: 0
-  old_apk_size: 0
+  apk_size_data: apk_size_data.txt
 
 jobs:
   apk_build:
@@ -68,6 +67,9 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            core.setFailed('new_apk_size and old_apk_size are not same')
+            while read line
+              do 
+              echo "line: $line"
+            done < $apk_size_data
         
       
