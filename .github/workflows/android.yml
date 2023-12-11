@@ -63,8 +63,10 @@ jobs:
         for file in $files;
         do
           start_time=$(grep "Splashscreen#newInstance" $file | awk '{print $2}')
+          echo $start_time
           end_time=$(grep "Splashscreen#onAttach" $file | awk '{print $2}')
-          time_diff=$(gawk -v st="$start_time" -v ed="$end_time" '{
+          echo "$end_time"
+          time_diff=$(awk -v st="$start_time" -v ed="$end_time" 'END {
             split(st,a,":");
             sec1=a[1]*3600+a[2]*60+a[3];
             split(ed,b,":");
@@ -75,4 +77,3 @@ jobs:
           table_string+="$time_diff,"
           echo "Table string: $table_string"
         done
-        echo $table_string
