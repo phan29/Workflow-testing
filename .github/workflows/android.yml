@@ -57,13 +57,12 @@ jobs:
 
     - name: Run script
       run: |
-        brew install gawk
         files=("app/emulator.log" "app/emulator_next.log")
         table_string=""
         for file in $files;
         do
           start_time=$(grep "Splashscreen#newInstance" $file | awk '{print $2}')
-          echo $start_time
+          echo "$start_time"
           end_time=$(grep "Splashscreen#onAttach" $file | awk '{print $2}')
           echo "$end_time"
           time_diff=$(awk 'END {
