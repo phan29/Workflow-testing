@@ -78,14 +78,14 @@ jobs:
           echo "new-size: ${{ env.new_apk_size }}"
           
 
-      - name: A/B check
-        if: ${{ new_apk_size }} != ${{ old_apk_size }}
-        uses: actions/github-script@v6
-        with:
-          script: |
-            while read line
-              do 
-              echo "line: $line"
-            done < $apk_size_data
+      # - name: A/B check
+      #   if: ${{ new_apk_size }} != ${{ old_apk_size }}
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       while read line
+      #         do 
+      #         echo "line: $line"
+      #       done < $apk_size_data
         
       
