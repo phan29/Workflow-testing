@@ -58,15 +58,19 @@ jobs:
     - name: Run script
       run: |
         cat -n app/emulator.log
-        files=("app/emulator.log")
         table_string=""
-        for file in $files;
-        do
-          start_time=$(awk '{print $2}' $file)
-          end_time=$(awk '{print $2}' $file)
+        start_time=$(awk '{print $2}' app/emulator.log)
           echo "$start_time"
-          time_diff=$(awk 'BEGIN {st=ARGV[1]; delete ARGV[1]; split(st,a,":"); sec1=a[1]*3600+a[2]*60+a[3]; et=ARGV[2]; delete ARGV[2]; split(et,b,":"); sec2=b[1]*3600+b[2]*60+b[3]; val=sec2-sec1; print val}' "$start_time" "$end_time")
-          echo $time_diff
-          table_string+="$time_diff,"
-          echo "Table string: $table_string"
-        done
+          time_diff=$(awk -F":" '
+          FNR==4{
+            split($2,a,":");
+            sec1=a[1]*3600+a[2]*60+a[3]
+          }
+          FNR==5{
+            split($2,b,":");
+            sec2=b[1]*3600+b[2]*60+b[3];
+            val=sec2-sec1;
+            print val
+          }
+          '  app/emulator.log)
+          echo "$time_diff"
