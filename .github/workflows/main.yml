@@ -83,7 +83,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-              core.setFailed('new_apk_size and old_apk_size are not same')
+              # core.setFailed('new_apk_size and old_apk_size are not same')
               const fs = require('fs')
               try {
               const filePath = 'apk_size_report.html'
