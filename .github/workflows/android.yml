@@ -33,14 +33,14 @@ jobs:
           adb logcat -c
           touch app/emulator.log
           chmod 777 app/emulator.log
-          adb logcat com.example.quizapp >> app/emulator.log & 
+          adb logcat adb logcat -s "######" >> app/emulator.log & 
           adb shell am start -n com.example.quizapp/.MainActivity
           sleep 30
           adb shell am force-stop com.example.quizapp
           adb logcat -c
           touch app/emulator_next.log
           chmod 777 app/emulator_next.log
-          adb logcat com.example.quizapp >> app/emulator_next.log & 
+          adb logcat com.example.quizapp | grep  >> app/emulator_next.log & 
           adb shell am start -n com.example.quizapp/.MainActivity
           sleep 30
 
@@ -57,14 +57,13 @@ jobs:
 
     - name: Run script
       run: |
-        files=("app/emulator.log")
+        files=("app/emulator_next.log")
         table_string=""
         for file in $files;
         do
-          start_time=$(grep "Splashscreen#newInstance" $file | awk '{print $2}')
-          end_time=$(grep "Splashscreen#onAttach" $file | awk '{print $2}')
+          start_time=$(awk '{print $2}' $file)
+          end_time=$(awk '{print $2}' $file)
           echo "$start_time"
-          echo "$end_time"
           time_diff=$(awk 'BEGIN {st=ARGV[1]; delete ARGV[1]; split(st,a,":"); sec1=a[1]*3600+a[2]*60+a[3]; et=ARGV[2]; delete ARGV[2]; split(et,b,":"); sec2=b[1]*3600+b[2]*60+b[3]; val=sec2-sec1; print val}' "$start_time" "$end_time")
           echo $time_diff
           table_string+="$time_diff,"
