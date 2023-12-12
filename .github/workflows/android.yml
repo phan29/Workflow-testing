@@ -61,7 +61,7 @@ jobs:
         table_string=""
         start_time=$(awk 'FNR==5{print $2}' app/emulator.log)
           echo "$start_time"
-          echo | awk -F":" '
+          echo | awk '
           FNR==4{
             split($2,a,":");
             sec1=a[1]*3600+a[2]*60+a[3]
