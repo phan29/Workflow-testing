@@ -61,16 +61,16 @@ jobs:
         table_string=""
         start_time=$(awk '{print $2}' app/emulator.log)
           echo "$start_time"
-          time_diff=$(awk -F":" '
-          FNR==4{
+          echo | awk -F":" '
+          NR==4{
             split($2,a,":");
             sec1=a[1]*3600+a[2]*60+a[3]
           }
-          FNR==5{
+          NR==5{
             split($2,b,":");
             sec2=b[1]*3600+b[2]*60+b[3];
             val=sec2-sec1;
             print val
           }
-          '  app/emulator.log)
+          '  app/emulator.log
           echo "$time_diff"
