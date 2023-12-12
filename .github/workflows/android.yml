@@ -52,16 +52,18 @@ jobs:
         table_string=""
         for i in {4..6..2};
         do
-          time_diff=$(awk " 
+          time_diff=$(awk '
           FNR==$i{
             split($2,a,":");
             sec1=a[1]*3600+a[2]*60+a[3]
           }
-          FNR==$i+1{
+          FNR==$((i+1)){
             split($2,b,":");
             sec2=b[1]*3600+b[2]*60+b[3];
             val=sec2-sec1;
             print val
-          }"  app/emulator.log)
-          echo "$time_diff,"
+          }'  app/emulator.log)
+          echo "$time_diff"
+          table_string+="$i,$((i+1)),$time_diff"
         done
+        echo table_string
