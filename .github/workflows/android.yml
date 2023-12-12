@@ -37,10 +37,6 @@ jobs:
           adb shell am start -n com.example.quizapp/.MainActivity
           sleep 30
           adb shell am force-stop com.example.quizapp
-          adb logcat -c
-          touch app/emulator_next.log
-          chmod 777 app/emulator_next.log
-          adb logcat com.example.quizapp | grep  >> app/emulator_next.log & 
           adb shell am start -n com.example.quizapp/.MainActivity
           sleep 30
 
@@ -49,11 +45,6 @@ jobs:
       with:
         name: cold_logs
         path: app/emulator.log
-    - name: Upload logs of warm start
-      uses: actions/upload-artifact@v3
-      with:
-        name: warm_logs
-        path: app/emulator_next.log
 
     - name: Run script
       run: |
@@ -61,15 +52,15 @@ jobs:
         table_string=""
         start_time=$(awk 'FNR==5{print $2}' app/emulator.log)
           echo "$start_time"
-          echo | awk '
+          time_diff=$(awk 'END 
           FNR==4{
             split($2,a,":");
             sec1=a[1]*3600+a[2]*60+a[3]
           }
-          FNR==6{
+          FNR==5{
             split($2,b,":");
             sec2=b[1]*3600+b[2]*60+b[3];
             val=sec2-sec1;
-            print sec1,sec2
-          }'  app/emulator.log
-          echo "$time_diff"
+            print val
+          }'  app/emulator.log)
+          echo $time_diff
