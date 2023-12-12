@@ -61,9 +61,9 @@ jobs:
             split($2,b,":");
             sec2=b[1]*3600+b[2]*60+b[3];
             val=sec2-sec1;
-            print val
+            print sec1,sec2
           }'  app/emulator.log)
           echo "$time_diff"
           table_string+="$time_dif,"
         done
-        echo table_string
+        echo $table_string
