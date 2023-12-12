@@ -57,6 +57,7 @@ jobs:
 
     - name: Run script
       run: |
+        cat -n app/emulator_next.log
         files=("app/emulator_next.log")
         table_string=""
         for file in $files;
