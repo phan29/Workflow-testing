@@ -88,25 +88,9 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-              # core.setFailed('new_apk_size and old_apk_size are not same')
               const fs = require('fs')
-              try {
               const filePath = 'all_reports.html'
               const sizeReportContent = fs.readFileSync(filePath, 'utf8')
               console.log("sizeReportContent: ",sizeReportContent)
-              # const result = await github.rest.issues.createComment({
-              # issue_number: context.issues.number,
-              # owner: context.repo.owner,
-              # repo: context.repo.repo,
-              # body: sizeReportContent
-              # })
-              # console.log(result)
-              # } catch(error) {
-              # console.log("Error reading file", error)
-              # }
-            # while read line
-            #   do 
-            #   echo "line: $line"
-            # done < $apk_size_data
         
       
