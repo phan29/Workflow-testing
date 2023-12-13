@@ -53,7 +53,7 @@ jobs:
         time_strings=(${time_strings// /})
         echo "${#time_strings[@]}"
         table_string=""
-        for i in {0.."${#time_strings[@]}"};
+        for index in "${!time_strings[@]}"
         do
           time_diff=$(awk -v start_time="${time_strings[$i]}" -v end_time="${time_strings[$((i++))]}" ' {
               split(start_time,a,":");
