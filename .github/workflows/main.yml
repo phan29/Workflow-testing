@@ -81,7 +81,7 @@ jobs:
 
       - name: Merge files
         run: |
-          apk_size_analyis_report.html aar_size_analysis_report.html > all_reports.html
+          cat apk_size_analyis_report.html aar_size_analysis_report.html > all_reports.html
           
 
       - name: A/B check
