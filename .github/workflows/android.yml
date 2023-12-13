@@ -33,7 +33,7 @@ jobs:
           adb logcat -c
           touch app/emulator.log
           chmod 777 app/emulator.log
-          adb logcat adb logcat -s "######" >> app/emulator.log & 
+          adb logcat com.example.quizapp >> app/emulator.log & 
           adb shell am start -n com.example.quizapp/.MainActivity
           sleep 30
           adb shell am force-stop com.example.quizapp
@@ -49,21 +49,21 @@ jobs:
     - name: Run script
       run: |
         cat -n app/emulator.log
+        time_strings=$(grep "######" app/emulator.log | awk '{print $2}')
+        echo "$time_strings"
+        echo "${#time_strings[@]}"
         table_string=""
-        for i in {4..6..2};
+        for ((i=0; i<${#time_strings[@]}; i++))
         do
-          time_diff=$(awk -v i="$i" ' END {
-            FNR==i{
-              split($2,a,":");
+          time_diff=$(awk -v i="$i" -v arr="$time_strings" ' END {
+              split(arr[i],a,":");
               sec1=a[1]*3600+a[2]*60+a[3]
-            }
-            FNR==i+1{
               split($2,b,":");
-              sec2=b[1]*3600+b[2]*60+b[3];
+              sec2=b[arr[i++]]*3600+b[2]*60+b[3];
               val=sec2-sec1;
               print val
-            }
-          }'  app/emulator.log)
+          }')
+          $((i++))
           echo "$time_diff"
           table_string+="$time_dif,"
         done
