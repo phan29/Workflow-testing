@@ -51,9 +51,9 @@ jobs:
         time_strings=$(grep "######" app/emulator.log | awk '{print $2}')
         echo $time_strings
         time_strings=(${time_strings// /})
-        len=${#time_strings[@]}
+        len="${#time_strings[@]}"
         table_string=""
-        for (( index=0; index<$len; index++))
+        for (( index=0; index<$len && index%2==0; index++))
         do
           echo "${time_strings[$index]}, ${time_strings[$((index+1))]}"
           time_diff=$(awk -v start_time="${time_strings[$index]}" -v end_time="${time_strings[$((index+1))]}" ' END{
@@ -66,6 +66,5 @@ jobs:
           }')
           echo "$time_diff"
           table_string+="$time_diff,"
-          index=$((index+1))
         done
         echo "$table_string"
