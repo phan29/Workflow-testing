@@ -51,7 +51,7 @@ jobs:
         time_strings=$(grep "######" app/emulator.log | awk '{print $2}')
         echo $time_strings
         time_strings=(${time_strings// /})
-        len="${#time_strings[@]}"
+        len=${#time_strings[@]}
         table_string=""
         for (( index=0; index<$len; index++))
         do
