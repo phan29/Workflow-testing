@@ -66,6 +66,6 @@ jobs:
           }')
           echo "$time_diff"
           table_string+="$time_diff,"
-          $((index++))
+          index=$((index+1))
         done
         echo "$table_string"
