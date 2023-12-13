@@ -78,28 +78,32 @@ jobs:
         run: |
           echo "old-size: ${{ env.old_apk_size }}"
           echo "new-size: ${{ env.new_apk_size }}"
+
+      - name: Merge files
+        run: |
+          apk_size_analyis_report.html aar_size_analysis_report.html > all_reports.html
           
 
       - name: A/B check
-        if: ${{ env.new_apk_size }} != ${{ env.old_apk_size }}
         uses: actions/github-script@v6
         with:
           script: |
               # core.setFailed('new_apk_size and old_apk_size are not same')
               const fs = require('fs')
               try {
-              const filePath = 'apk_size_report.html'
+              const filePath = 'all_reports.html'
               const sizeReportContent = fs.readFileSync(filePath, 'utf8')
-              const result = await github.rest.issues.createComment({
-              issue_number: context.issues.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: sizeReportContent
-              })
-              console.log(result)
-              } catch(error) {
-              console.log("Error reading file", error)
-              }
+              console.log("sizeReportContent: ",sizeReportContent)
+              # const result = await github.rest.issues.createComment({
+              # issue_number: context.issues.number,
+              # owner: context.repo.owner,
+              # repo: context.repo.repo,
+              # body: sizeReportContent
+              # })
+              # console.log(result)
+              # } catch(error) {
+              # console.log("Error reading file", error)
+              # }
             # while read line
             #   do 
             #   echo "line: $line"
