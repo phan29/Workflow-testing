@@ -83,7 +83,7 @@ jobs:
       - name: Merge files
         run: |
           echo "print value"
-          echo ${steps.variable_print.outcome}
+          echo ${{ steps.variable_print.outcome }}
           cat ${{ env.apk_size_analysis_report_file }} ${{ env.aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
           
 
