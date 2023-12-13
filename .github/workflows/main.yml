@@ -75,12 +75,15 @@ jobs:
           python3 ./.github/scripts/temp.py
 
       - name: Print the variables
+        id: variable_print
         run: |
           echo "old-size: ${{ env.old_apk_size }}"
           echo "new-size: ${{ env.new_apk_size }}"
 
       - name: Merge files
         run: |
+          echo "print value"
+          echo ${steps.variable_print.outcome}
           cat ${{ env.apk_size_analysis_report_file }} ${{ env.aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
           
 
