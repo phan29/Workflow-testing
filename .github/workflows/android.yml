@@ -55,7 +55,7 @@ jobs:
         table_string=""
         for index in "${!time_strings[@]}"
         do
-          time_diff=$(awk -v start_time="${time_strings[$i]}" -v end_time="${time_strings[$((i++))]}" ' {
+          time_diff=$(awk -v start_time="${time_strings[$index]}" -v end_time="${time_strings[$((index++))]}" ' {
               split(start_time,a,":");
               sec1=a[1]*3600+a[2]*60+a[3]
               split(end_time,b,":");
