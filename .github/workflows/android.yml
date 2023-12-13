@@ -65,6 +65,6 @@ jobs:
             print val
           }')
           echo "$time_diff"
-          table_string+="$time_diff"+":"
+          table_string+="$time_diff,"
         done
         echo "$table_string"
