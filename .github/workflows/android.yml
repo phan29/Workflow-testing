@@ -64,7 +64,7 @@ jobs:
             val=sec2-sec1;
             print start_time,end_time,sec1,sec2,val
           }')
-          index++
+          index=$((index++))
           echo "$time_diff"
           table_string+="$time_diff"+":"
         done
