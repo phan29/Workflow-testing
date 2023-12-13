@@ -10,6 +10,8 @@ on:
 
 env:
   apk_size_analysis_report_file: apk_size_analyis_report.html
+  aar_size_analysis_report_file: aar_size_analysis_report.html
+  all_reports_file: all_reports.html
   
 
 jobs:
