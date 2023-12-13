@@ -56,7 +56,7 @@ jobs:
         for index in "${!time_strings[@]}"
         do
           echo "$index, ${time_strings[$index]}"
-          time_diff=$(awk -v start_time="${time_strings[$index]}" -v end_time="${time_strings[$((index++))]}" ' END{
+          time_diff=$(awk -v start_time="${time_strings[$index]}" -v end_time="${time_strings[$((index+1))]}" ' END{
             split(start_time,a,":");
             sec1=a[1]*3600+a[2]*60+a[3]
             split(end_time,b,":");
@@ -64,7 +64,8 @@ jobs:
             val=sec2-sec1;
             print start_time,end_time,sec1,sec2,val
           }')
+          index++
           echo "$time_diff"
-          table_string+="$time_dif,"
+          table_string+="$time_diff"+":"
         done
-        echo $table_string
+        echo "$table_string"
