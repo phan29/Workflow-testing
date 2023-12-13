@@ -51,20 +51,19 @@ jobs:
         time_strings=$(grep "######" app/emulator.log | awk '{print $2}')
         echo $time_strings
         time_strings=(${time_strings// /})
-        echo "${#time_strings[@]}"
+        len=${#time_strings[@]}
         table_string=""
-        for index in "${!time_strings[@]}"
+        for index in "${0..$((len-1))..2}"
         do
-          echo "$index, ${time_strings[$index]}"
+          echo "${time_strings[$index]}, ${time_strings[$((index+1))]}"
           time_diff=$(awk -v start_time="${time_strings[$index]}" -v end_time="${time_strings[$((index+1))]}" ' END{
             split(start_time,a,":");
             sec1=a[1]*3600+a[2]*60+a[3]
             split(end_time,b,":");
             sec2=b[1]*3600+b[2]*60+b[3];
             val=sec2-sec1;
-            print start_time,end_time,sec1,sec2,val
+            print val
           }')
-          index=$((index++))
           echo "$time_diff"
           table_string+="$time_diff"+":"
         done
