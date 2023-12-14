@@ -115,15 +115,16 @@ jobs:
       - name: Merge all reports in all_reports_file
         run: |
           echo "exec"
-          if [ steps.download_apk_size_analysis_report_file.outcome = 'success' ] && [ steps.download_aar_size_analysis_report_file.outcome = 'success' ]
+          echo ""
+          if [ ${{ steps.download_apk_size_analysis_report_file.outcome }} = 'success' ] && [ ${{ steps.download_aar_size_analysis_report_file.outcome }} = 'success' ]
           then
             echo "executing first if"
             cat ${{ env.apk_size_analysis_report_file }} ${{ env.aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
-          elif [ steps.download_apk_size_analysis_report_file.outcome = 'success' ]
+          elif [ ${{ steps.download_apk_size_analysis_report_file.outcome }} = 'success' ]
           then
             echo "executing first elif"
             cat ${{ env.apk_size_analysis_report_file }} > ${{ env.all_reports_file }}
-          elif [ steps.download_aar_size_analysis_report_file.outcome = 'success' ]
+          elif [ ${{ steps.download_aar_size_analysis_report_file.outcome }} = 'success' ]
           then
             echo "executing second elif"
             cat ${{ env.aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
