@@ -80,19 +80,51 @@ jobs:
           echo "old-size: ${{ env.old_apk_size }}"
           echo "new-size: ${{ env.new_apk_size }}"
 
-      - name: Merge files
-        run: |
-          echo "print value"
+      # - name: Merge files
+      #   run: |
+      #     echo "print value"
           
-          if [ ${{ steps.variable_print.outcome }} = 'success' ]
-          then
-            echo "success"
-          else
-            echo "failure"
-          fi
-          cat ${{ env.apk_size_analysis_report_file }} ${{ env.aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
-          
+      #     if [ ${{ steps.variable_print.outcome }} = 'success' ]
+      #     then
+      #       echo "success"
+      #     else
+      #       echo "failure"
+      #     fi
+      #     cat ${{ env.apk_size_analysis_report_file }} ${{ env.aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
 
+
+  pr_comment_of_all_reports:
+    if: ${{ always() }}
+    name: Add PR comment containing all reports
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download apk_size_analysis_report_file
+        id: download_apk_size_analysis_report_file
+        continue-on-error: true
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.apk_size_analysis_report_file }}
+
+      - name: Download aar_size_analysis_report_file
+        id: download_aar_size_analysis_report_file
+        continue-on-error: true
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.aar_size_analysis_report_file }}
+
+      - name: Merge all reports in all_reports_file
+        run: |
+          if [ steps.download_apk_size_analysis_report_file.outcome = 'success' ] && [ steps.download_aar_size_analysis_report_file.outcome = 'success' ]
+          then
+            cat ${{ env.apk_size_analysis_report_file }} ${{ env.aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
+          elif [ steps.download_apk_size_analysis_report_file.outcome = 'success' ]
+          then
+            cat ${{ env.apk_size_analysis_report_file }} > ${{ env.all_reports_file }}
+          elif [ steps.download_aar_size_analysis_report_file.outcome = 'success' ]
+          then
+            cat ${{ env.download_aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
+          fi
+        
       - name: A/B check
         uses: actions/github-script@v6
         with:
