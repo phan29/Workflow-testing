@@ -114,6 +114,7 @@ jobs:
 
       - name: Merge all reports in all_reports_file
         run: |
+          echo "exec"
           if [ steps.download_apk_size_analysis_report_file.outcome = 'success' ] && [ steps.download_aar_size_analysis_report_file.outcome = 'success' ]
           then
             echo "executing first if"
