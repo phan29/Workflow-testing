@@ -122,7 +122,7 @@ jobs:
             cat ${{ env.apk_size_analysis_report_file }} > ${{ env.all_reports_file }}
           elif [ steps.download_aar_size_analysis_report_file.outcome = 'success' ]
           then
-            cat ${{ env.download_aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
+            cat ${{ env.aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
           fi
         
       - name: A/B check
