@@ -1,5 +1,4 @@
 # This workflow will set a number or reviewers depending on the labels
-# anything else
 name: Label Reviews
 # Trigger the workflow on pull requests
 # PAT  : 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
