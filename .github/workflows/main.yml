@@ -120,7 +120,7 @@ jobs:
           then
             echo "executing first if"
             cat ${{ env.apk_size_analysis_report_file }} ${{ env.aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
-          elif [ ${{ steps.download_apk_size_analysis_report_file.outcome }} = 'success' ]
+          elif [ ${{ steps.download_apk_size_analysis_report_file.outcome }} = 'failure' ]
           then
             echo "executing first elif"
             cat ${{ env.apk_size_analysis_report_file }} > ${{ env.all_reports_file }}
