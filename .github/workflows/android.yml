@@ -34,9 +34,10 @@ jobs:
           touch app/emulator.log
           chmod 777 app/emulator.log
           adb logcat com.example.quizapp >> app/emulator.log & 
-          for i in {1..10}; do
+          'for i in {1..10}
+          do
             echo $i
-          done
+          done'
           adb shell am start -n com.example.quizapp/.MainActivity
           sleep 30
           adb shell am force-stop com.example.quizapp
