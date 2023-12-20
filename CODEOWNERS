@@ -2,10 +2,10 @@
 # the repo. Unless a later match takes precedence,
 # @global-owner1 and @global-owner2 will be requested for
 # review when someone opens a pull request.
-*       @NNKK24 @hitesh-temp-account
 
 # Signal-collection module that collects local and remote signals
-/signal-collection/ @NNKK24
+/signal-collection/ @NCK22 @NNKK24
 
 # Group-matching module that collects local and remote signals
-/group-matching/ @hitesh-temp-account
+# /group-matching/ @hitesh-temp-account @NCK22 
+/group-matching/ @NCK22 
