@@ -28,10 +28,5 @@ jobs:
         with:
           rules_yaml: | # define which PR labels require how many aprroving reviewers
             requested_reviewers: ${{ toJson(github.event.pull_request.requested_reviewers) }}
-            run: |
-            echo "$requested_reviewers"
-            LL=$(echo $requested_reviewers | jq '. | length' )
-            echo "::set-output name=reviewer_length::$LL"
-            Update: steps.getlegth.outputs.reviewer_length
+
           
-  
