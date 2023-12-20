@@ -31,4 +31,3 @@ jobs:
             run: |
               echo "$requested_reviewers"
               LL=$(echo $requested_reviewers | jq '. | length' )
-              echo "::set-output name=reviewer_length::$LL"
