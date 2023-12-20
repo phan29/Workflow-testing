@@ -4,8 +4,8 @@
 # review when someone opens a pull request.
 
 # Signal-collection module that collects local and remote signals
-/signal-collection/ @NCK22 @NNKK24
+/signal-collection/ @NCK22
 
 # Group-matching module that collects local and remote signals
 # /group-matching/ @hitesh-temp-account @NCK22 
-/group-matching/ @NCK22 
+/group-matching/ @NNKK24
