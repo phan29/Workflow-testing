@@ -1,1 +1,65 @@
+apply plugin: 'maven-publish'
+apply plugin: 'org.jetbrains.dokka'
 
+android {
+  publishing {
+    singleVariant("release") {
+      withSourceJar()
+    }
+  }
+}
+
+task javadocJar(type: Jar, depensOn: dokkaJavadoc) {
+  classifier 'javadoc'
+  from dokkaJavadoc.outputDirectory
+}
+
+def pomC = {
+            name = 'workflow testing'
+            description = 'Privacy and brand-safe'
+                
+            url = 'https://github.com/phan29/workflow-testing'
+            licenses {
+                license {
+                    name = "BSD 2-closure"
+                    url = "https://opensource.org/licenses/Apache-2.0"
+                }
+            }
+            developers {
+                developer {
+                    id. = 'phan29'
+                    name = "Phan Tom"
+                }
+            }
+            scm {
+                url = "https://github.com/Workflow-testing.git"
+                connection = "scm:git:git://github.com/Workflow-testing.git"
+                developerConnection = "scm:git:git://github.com/Workflow-testing.git"
+            }
+        }
+
+afterEvaluate {
+  publishing {
+    publications {
+      version = '1.1.0'
+
+      release(MavenPublication) {
+        from components.release
+
+        artifact(javadocJar) {
+          classifier = 'javadoc'
+        }
+        pom(pomC)
+      }
+    }
+
+    repositories {
+      def sonatypeUsername = System.getenv('SONATYPE_USER')
+      def sonatypePassword = System.getenv('SONATYPE_PASSWORD')
+      maven {
+        name = "SonatypeSnapshot"
+        url = "https://"
+      }
+    }
+  }
+}
