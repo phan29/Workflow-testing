@@ -10,6 +10,9 @@ on:
 
 env:
   apk_size_analysis_report_file: apk_size_analyis_report.html
+  aar_size_analysis_report_file: aar_size_analysis_report.html
+  all_reports_file: all_reports.html
+  
 
 jobs:
   apk_build:
@@ -39,6 +42,11 @@ jobs:
             /usr/local/lib/android/sdk/system-images
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
 
+      # - name: Set the variables
+      #   run: |
+      #     echo "{old_apk_size}={0}" >> $GITHUB_ENV
+      #     echo "{new_apk_size}={0}" >> $GITHUB_ENV
+
       - name: Build release APK
         run: |
           ./gradlew assembleRelease
@@ -60,5 +68,75 @@ jobs:
         with:
           name: release-base-arm64-v8a-apk.apk
           path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
+
+      - name: Run python script
+        run: |
+          chmod +x ./.github/scripts/temp.py
+          python3 ./.github/scripts/temp.py
+
+      - name: Print the variables
+        id: variable_print
+        run: |
+          echo "old-size: ${{ env.old_apk_size }}"
+          echo "new-size: ${{ env.new_apk_size }}"
+
+      # - name: Merge files
+      #   run: |
+      #     echo "print value"
+          
+      #     if [ ${{ steps.variable_print.outcome }} = 'success' ]
+      #     then
+      #       echo "success"
+      #     else
+      #       echo "failure"
+      #     fi
+      #     cat ${{ env.apk_size_analysis_report_file }} ${{ env.aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
+
+
+  pr_comment_of_all_reports:
+    if: ${{ always() }}
+    name: Add PR comment containing all reports
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download apk_size_analysis_report_file
+        id: download_apk_size_analysis_report_file
+        continue-on-error: true
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.apk_size_analysis_report_file }}
+
+      - name: Download aar_size_analysis_report_file
+        id: download_aar_size_analysis_report_file
+        continue-on-error: true
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.aar_size_analysis_report_file }}
+
+      - name: Merge all reports in all_reports_file
+        run: |
+          echo "exec"
+          echo ""
+          if [ ${{ steps.download_apk_size_analysis_report_file.outcome }} = 'success' ] && [ ${{ steps.download_aar_size_analysis_report_file.outcome }} = 'success' ]
+          then
+            echo "executing first if"
+            cat ${{ env.apk_size_analysis_report_file }} ${{ env.aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
+          elif [ ${{ steps.download_apk_size_analysis_report_file.outcome }} = 'failure' ]
+          then
+            echo "executing first elif"
+            cat ${{ env.apk_size_analysis_report_file }} > ${{ env.all_reports_file }}
+          elif [ ${{ steps.download_aar_size_analysis_report_file.outcome }} = 'success' ]
+          then
+            echo "executing second elif"
+            cat ${{ env.aar_size_analysis_report_file }} > ${{ env.all_reports_file }}
+          fi
+        
+      - name: A/B check
+        uses: actions/github-script@v6
+        with:
+          script: |
+              const fs = require('fs')
+              const filePath = 'all_reports.html'
+              const sizeReportContent = fs.readFileSync(filePath, 'utf8')
+              console.log("sizeReportContent: ",sizeReportContent)
         
       
