@@ -26,4 +26,4 @@ jobs:
           length=$(echo $requested_reviewers | jq '. | length')
           echo "length = $length"
         env:
-          requested_reviewers: ${{ toJson(github.event.pull_request.requested_reviewers) }}
+          requested_reviewers: ${{ github.event.pull_request.requested_reviewers }}
