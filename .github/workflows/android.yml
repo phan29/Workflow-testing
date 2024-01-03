@@ -23,7 +23,8 @@ jobs:
         
     - name: Run script
       run: |
-        time_strings=()
+        time_strings=""
+        time_strings=($(time_strings// /))
         echo "$time_strings"
         len=${#time_strings[@]}
         table_string="Cold,No,0"
