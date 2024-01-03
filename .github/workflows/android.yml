@@ -1,0 +1,40 @@
+name: gen time
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  bidder-token-gen-time:
+
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
+    
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+        
+    - name: Run script
+      run: |
+        time_strings=""
+        time_strings=($(time_strings// /))
+        echo "$time_strings"
+        len=${#time_strings[@]}
+        table_string="Cold,No,0"
+        ninety_per=$((len * 9/10))
+        if [ $len > 0 ]; then
+          if [ $ninety_per == 0 ]; then
+            index=0
+          else
+            index=$((ninety_per - 1))
+          fi
+          table_string="Cold,No,${time_strings[$index]}"
+        fi
+        echo "$table_string"
