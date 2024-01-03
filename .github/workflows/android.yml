@@ -27,7 +27,7 @@ jobs:
         echo $time_strings
         len=${#time_strings[@]}
         table_string="Cold,No,0"
-        ninety_per=$(len * 9/10)
+        ninety_per=$((len * 9/10))
         if [ $len > 0]; then
           if [ $ninety_per == 0]; then
             index=0
