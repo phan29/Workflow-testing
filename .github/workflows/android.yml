@@ -24,12 +24,12 @@ jobs:
     - name: Run script
       run: |
         time_strings=(2 3 5 7 8 0 3 3 5 2)
-        echo $time_strings
+        echo "$time_strings"
         len=${#time_strings[@]}
         table_string="Cold,No,0"
         ninety_per=$((len * 9/10))
-        if [ $len > 0]; then
-          if [ $ninety_per == 0]; then
+        if [ $len > 0 ]; then
+          if [ $ninety_per == 0 ]; then
             index=0
           else
             index=$((ninety_per - 1))
