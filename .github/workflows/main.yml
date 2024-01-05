@@ -15,8 +15,8 @@ jobs:
   apk_size_analysis:
     uses: ./.github/workflows/artifact-producer.yml
     
-  # outputs_reading:
-  #   uses: ./.github/workflows/outputs-producer.yml
+  outputs_reading:
+    uses: ./.github/workflows/outputs-producer.yml
 
   deploy:
     runs-on: ubuntu-latest
@@ -34,12 +34,3 @@ jobs:
       run: |
        echo "printing from main.yml"
     #    echo ${{ needs.outputs_reading.outputs.answer }}
-
-  # read_ops:
-  #   runs-on: ubutu-latest
-  #   needs: [outputs_reading]
-  #   steps:
-  #   - name: reading output from a reusable workflows
-  #     run: |
-  #      echo "printing from main.yml"
-  #      echo ${{ needs.outputs_reading.outputs.answer }}
