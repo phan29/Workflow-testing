@@ -3,9 +3,11 @@ name: Reusable workflow for APK size analysis
 on:
   # Reusable workflows (other workflows can trigger this)
   workflow_call:
+    outputs:
+      answer: ${{ jobs.reading_outputs.outputs.ans_string }}
       
 jobs:
-  apk_build:
+  reading_outputs:
     name: Build APK
     runs-on: ubuntu-latest
 
