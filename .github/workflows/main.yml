@@ -14,9 +14,9 @@ env:
 jobs:
   apk_size_analysis:
     uses: ./.github/workflows/artifact-producer.yml
-
+    
   outputs_reading:
-    uses: ./.github/workflows/outputs_producer.yml
+    uses: ./.github/workflows/outputs-producer.yml
 
   deploy:
     runs-on: ubuntu-latest
