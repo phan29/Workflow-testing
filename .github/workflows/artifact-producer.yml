@@ -4,12 +4,6 @@ on:
   # Reusable workflows (other workflows can trigger this)
   workflow_call:
   # Allows to run this workflow manually from the Actions tab
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - '*'
       
 jobs:
   apk_build:
