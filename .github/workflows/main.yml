@@ -15,12 +15,12 @@ jobs:
   apk_size_analysis:
     uses: ./.github/workflows/artifact-producer.yml
 
-  outputs_reading:
-    uses: ./.github/workflows/outputs_producer.yml
+  # outputs_reading:
+  #   uses: ./.github/workflows/outputs_producer.yml
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [apk_size_analysis, outputs_reading]
+    needs: [apk_size_analysis]
 
     steps:
     
@@ -30,10 +30,10 @@ jobs:
         name: release-base-arm64-v8a-apk.apk
         path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
 
-    - name: reading output from a reusable workflows
-      run: |
-       echo "printing from main.yml"
-       echo ${{ needs.outputs_reading.outputs.answer }}
+    # - name: reading output from a reusable workflows
+    #   run: |
+    #    echo "printing from main.yml"
+    #    echo ${{ needs.outputs_reading.outputs.answer }}
 
   # read_ops:
   #   runs-on: ubutu-latest
