@@ -4,7 +4,9 @@ on:
   # Reusable workflows (other workflows can trigger this)
   workflow_call:
     outputs:
-      answer: ${{ jobs.reading_outputs.outputs.ans_string }}
+      answer: 
+        description: "Answer string"
+        value: ${{ jobs.reading_outputs.outputs.ans_string }}
       
 jobs:
   reading_outputs:
