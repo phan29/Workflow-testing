@@ -3,30 +3,18 @@ name: Reusable workflow for APK size analysis
 on:
   # Reusable workflows (other workflows can trigger this)
   workflow_call:
-    outputs:
-      answer: ${{ jobs.reading_outputs.outputs.ans_string }}
+  #   outputs:
+  #     answer: ${{ jobs.reading_outputs.outputs.ans_string }}
       
 jobs:
   reading_outputs:
-    name: Build APK
+    name: Reading outputs from reusable workflow
     runs-on: ubuntu-latest
 
     outputs:
       ans_string: ${{ steps.generate-report.outputs.ans }}
 
     steps:
-      - name: Checkout to head branch
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'zulu'
-
       - name: Generate report
         id: generate-report
         run: |
