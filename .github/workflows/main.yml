@@ -33,4 +33,4 @@ jobs:
     - name: reading output from a reusable workflows
       run: |
        echo "printing from main.yml"
-    #    echo ${{ needs.outputs_reading.outputs.answer }}
+       echo ${{ needs.outputs_reading.outputs.answer }}
