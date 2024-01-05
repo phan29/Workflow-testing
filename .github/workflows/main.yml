@@ -22,7 +22,7 @@ jobs:
     steps:
     
     - name: Upload release APK for ARM64_V8A
-      uses: actions/dowbload-artifact@v3
+      uses: actions/download-artifact@v3
       with:
         name: release-base-arm64-v8a-apk.apk
         path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
