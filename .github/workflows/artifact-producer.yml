@@ -9,6 +9,10 @@ jobs:
   apk_build:
     name: Build APK
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        architecture: ["", "x86","x86_64","arm64-v8a"]
 
     steps:
       - name: Checkout to head branch
@@ -35,9 +39,18 @@ jobs:
 
       - name: Build release APK
         run: |
-          ./gradlew assembleRelease
+          ./gradlew assembleRelease 
           mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
 
+      - name: apk name
+        run: |
+          apkName=""
+          if [ ${{ matrix.architecture }} != '' ];then
+            apkName="release-apk-${{ matrix.architecture }}.apk"
+          else
+            apkName="release-apk.apk"
+          echo "apkName: $apkName"
+          
       - name: Upload release APK
         uses: actions/upload-artifact@v3
         with:
