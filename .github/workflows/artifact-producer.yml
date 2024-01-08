@@ -49,6 +49,7 @@ jobs:
             apkName="release-apk-${{ matrix.architecture }}.apk"
           else
             apkName="release-apk.apk"
+          fi
           echo "apkName: $apkName"
           
       - name: Upload release APK
