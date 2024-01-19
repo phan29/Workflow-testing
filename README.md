@@ -9,6 +9,6 @@
     ````
     $ .gradlew :signal-collection
     ````
-    three
+    three three
 
 </details>
