@@ -1,8 +1,11 @@
 name: Reusable workflow for APK size analysis
 
 on:
+  workflow_dispatch:
+    branch:
+      - main
   # Reusable workflows (other workflows can trigger this)
-  workflow_call
+  workflow_call:
   # Allows to run this workflow manually from the Actions tab
       
 jobs:
