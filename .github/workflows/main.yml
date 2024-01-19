@@ -43,7 +43,8 @@ jobs:
        echo ${{ needs.outputs_reading.outputs.answer }}
       
     - name: frame html file
-      if: ${{ steps.download_release.outcome == 'success' || steps.reading_output.outcome == 'success' }}
+      if: ${{ steps.download_release.outcome == 'success' 
+        || steps.reading_output.outcome == 'success' }}
       id: frame_html
       run: |
          echo "<html><body><h2> html file</h2></body></html>" >> ${{ env.analysis_report_file }}
