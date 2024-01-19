@@ -7,12 +7,15 @@ on:
   pull_request:
     branches:
       - '*'
+    types:
+      - closed
 
 env:
   apk_size_analysis_report_file: apk_size_analyis_report.html
 
 jobs:
   apk_size_analysis:
+    if: github.event.pull_request.merged == true
     uses: ./.github/workflows/artifact-producer.yml
     
   outputs_reading:
