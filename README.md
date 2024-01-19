@@ -9,6 +9,5 @@
     ````
     $ .gradlew :signal-collection
     ````
-    three three vvzzcxdcvxcv
 
 </details>
