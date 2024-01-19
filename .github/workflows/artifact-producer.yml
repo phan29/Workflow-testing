@@ -47,7 +47,6 @@ jobs:
 
       - name: apk name
         run: |
-          sdgjhg
           apkName=""
           if [ ${{ matrix.architecture }} != '' ];then
             apkName="release-apk-${{ matrix.architecture }}.apk"
