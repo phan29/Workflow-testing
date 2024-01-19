@@ -15,7 +15,6 @@ env:
 
 jobs:
   apk_size_analysis:
-    if: github.event.pull_request.merged == true
     uses: ./.github/workflows/artifact-producer.yml
     
   outputs_reading:
