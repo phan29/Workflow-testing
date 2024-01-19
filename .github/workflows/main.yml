@@ -17,41 +17,38 @@ jobs:
     if: ${{ github.event.pull_request.merged }}
     uses: ./.github/workflows/outputs-producer.yml
 
-  deploy:
-    if: ${{ github.event.pull_request.merged }}
-    runs-on: ubuntu-latest
+  pr_comment:
+    name: Add PR comment
     needs: [apk_size_analysis, outputs_reading]
+    if: ${{ needs.apk_size_analysis.result == 'success' && needs.outputs_reading.result == 'success' && github.event.pull_request.merged }}
+    runs-on: ubuntu-latest
 
     steps:
-    
-    - name: Upload release APK for ARM64_V8A
+    - name: Download release APK for ARM64_V8A
+      id: download_release
+      continue-on-error: true
       uses: actions/download-artifact@v3
       with:
         name: release-base-arm64-v8a-ak.apk
         path: app/build/outputs/apk/release/release-base-arm64-v8a-ap.apk
 
     - name: reading output from a reusable workflows
+      id: reading_output
+      continue-on-error: true
       run: |
        echo "printing from main.yml"
        echo ${{ needs.outputs_reading.outputs.answer }}
+      
+    - name: frame html file
+      id: frame_html
+      run: |
+         echo "<html><body><h2> html file</h2></body></html>" >> ${{ env.analysis_report_file }}
 
-  pr_comment:
-    name: Add PR comment
-    if: ${{ always() && github.event.pull_request.merged }}
-    needs: [apk_size_analysis, outputs_reading, deploy]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: frame html file
-        id: frame_html
-        run: |
-          echo "<html><body><h2> html file</h2></body></html>" >> ${{ env.analysis_report_file }}
-
-      - name: Add PR comment
-        uses: actions/github-script@v6
-        with:
-          script: |
-            try {
+    - name: Add PR comment
+      uses: actions/github-script@v6
+      with:
+        script: |
+          try {
               const fs = require('fs')
               const filePath = 'analyis_report.html'
               const reportContent = fs.readFileSync(filePath, 'utf8')
