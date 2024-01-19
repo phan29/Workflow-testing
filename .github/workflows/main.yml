@@ -40,6 +40,7 @@ jobs:
   pr_comment:
     name: Add PR comment
     if: ${{ always() && github.event.pull_request.merged }}
+    needs: [apk_size_analysis, outputs_reading, deploy]
     runs-on: ubuntu-latest
 
     steps:
