@@ -8,7 +8,7 @@ on:
       - closed
 
 env:
-  apk_size_analysis_report_file: apk_size_analyis_report.html
+  analysis_report_file: analyis_report.html
 
 jobs:
   apk_size_analysis:
@@ -34,3 +34,33 @@ jobs:
       run: |
        echo "printing from main.yml"
        echo ${{ needs.outputs_reading.outputs.answer }}
+
+  pr_comment:
+    name: Add PR comment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: frame html file
+        id: frame_html
+        run: |
+          echo "<html><body><h2> html file</h2></body></html>" >> ${{ env.analysis_report_file }}
+
+      - name: Add PR comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            try {
+              const filePath = 'analyis_report.html'
+              const reportContent = fs.readFileSync(filePath)
+              const result = await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: reportContent
+              })
+              console.log(result)
+            }
+            catch(e) {
+              console.error("Error reading file: ", e);
+            }
+  
