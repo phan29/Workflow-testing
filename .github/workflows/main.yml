@@ -19,10 +19,23 @@ jobs:
     if: ${{ github.event.pull_request.merged }}
     uses: ./.github/workflows/outputs-producer.yml
 
+  should_display_pr_comment:
+    runs-on: ubuntu-latest
+    needs: [apk_size_analysis, outputs_reading]
+    if: ${{ always() }}
+    outputs: 
+      result: ${{ steps.set_status.outputs.result }}
+    steps:
+      - name: Set status
+        id: set_status
+        run: |
+          result=({{ needs.apk_size_analysis.result }} == 'success' || {{ needs.outputs_reading.result }} == 'success') 
+          echo "::set-output name=result::$result"
+
   pr_comment:
     name: Add PR comment
-    needs: [apk_size_analysis, outputs_reading]
-    if: ${{ (needs.apk_size_analysis.result == 'success' || needs.outputs_reading.result == 'success') && github.event.pull_request.merged }}
+    needs: [should_display_pr_comment]
+    if: ${{ needs.should_display_pr_comment.outputs.result && github.event.pull_request.merged }}
     runs-on: ubuntu-latest
 
     steps:
