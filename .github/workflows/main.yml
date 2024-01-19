@@ -1,4 +1,4 @@
-name: APK size analysis
+name: Main
 
 on:
   pull_request:
@@ -16,9 +16,11 @@ jobs:
     uses: ./.github/workflows/artifact-producer.yml
     
   outputs_reading:
+    if: ${{ github.event.pull_request.merged }}
     uses: ./.github/workflows/outputs-producer.yml
 
   deploy:
+    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     needs: [apk_size_analysis, outputs_reading]
 
@@ -37,6 +39,7 @@ jobs:
 
   pr_comment:
     name: Add PR comment
+    if: ${{ always() && github.event.pull_request.merged }}
     runs-on: ubuntu-latest
 
     steps:
@@ -52,7 +55,7 @@ jobs:
             try {
               const fs = require('fs')
               const filePath = 'analyis_report.html'
-              const reportContent = fs.readFileSync(filePath)
+              const reportContent = fs.readFileSync(filePath, 'utf8')
               const result = await github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
