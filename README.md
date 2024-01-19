@@ -9,6 +9,5 @@
     ````
     $ .gradlew :signal-collection
     ````
-    temp changes
-  
+
 </details>
