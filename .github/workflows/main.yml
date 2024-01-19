@@ -22,7 +22,7 @@ jobs:
   pr_comment:
     name: Add PR comment
     needs: [apk_size_analysis, outputs_reading]
-    if: ${{ (needs.apk_size_analysis.result == 'failure' || needs.outputs_reading.result == 'failure') && github.event.pull_request.merged }}
+    if: ${{ always() }}
     runs-on: ubuntu-latest
 
     steps:
@@ -38,10 +38,12 @@ jobs:
       id: reading_output
       continue-on-error: true
       run: |
+       sdd
        echo "printing from main.yml"
        echo ${{ needs.outputs_reading.outputs.answer }}
       
     - name: frame html file
+      if: ${{ steps.download_release.outcome == 'success' || steps.reading_output.outcome == 'success' }}
       id: frame_html
       run: |
          echo "<html><body><h2> html file</h2></body></html>" >> ${{ env.analysis_report_file }}
