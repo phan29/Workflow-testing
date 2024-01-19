@@ -1,24 +1,28 @@
 name: Main
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
+      - "*"
+    types:
+      - closed
 
 env:
   analysis_report_file: analyis_report.html
 
 jobs:
   apk_size_analysis:
+    if: ${{ github.event.pull_request.merged }}
     uses: ./.github/workflows/artifact-producer.yml
     
   outputs_reading:
+    if: ${{ github.event.pull_request.merged }}
     uses: ./.github/workflows/outputs-producer.yml
 
   pr_comment:
     name: Add PR comment
     needs: [apk_size_analysis, outputs_reading]
-    if: ${{ needs.apk_size_analysis.result == 'success' && needs.outputs_reading.result == 'success' }}
+    if: ${{ needs.apk_size_analysis.result == 'success' && needs.outputs_reading.result == 'success' && github.event.pull_request.merged }}
     runs-on: ubuntu-latest
 
     steps:
