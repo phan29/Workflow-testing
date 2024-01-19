@@ -10,17 +10,15 @@ env:
 
 jobs:
   apk_size_analysis:
-    if: ${{ github.event.pull_request.merged }}
     uses: ./.github/workflows/artifact-producer.yml
     
   outputs_reading:
-    if: ${{ github.event.pull_request.merged }}
     uses: ./.github/workflows/outputs-producer.yml
 
   pr_comment:
     name: Add PR comment
     needs: [apk_size_analysis, outputs_reading]
-    if: ${{ needs.apk_size_analysis.result == 'success' && needs.outputs_reading.result == 'success' && github.event.pull_request.merged }}
+    if: ${{ needs.apk_size_analysis.result == 'success' && needs.outputs_reading.result == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
