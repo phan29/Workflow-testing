@@ -1,0 +1,25 @@
+name: Reusable workflow for APK size analysis
+
+on:
+  # Reusable workflows (other workflows can trigger this)
+  workflow_call:
+    outputs:
+      answer: 
+        description: "Answer string"
+        value: ${{ jobs.reading_outputs.outputs.ans_string }}
+      
+jobs:
+  reading_outputs:
+    name: Reading outputs from reusable workflow
+    runs-on: ubuntu-latest
+
+    outputs:
+      ans_string: ${{ steps.generate-report.outputs.ans }}
+
+    steps:
+      - name: Generate report
+        id: generate-report
+        run: |
+          ans="answer to the question"
+          echo "::set-output name=ans::$ans"
+        
