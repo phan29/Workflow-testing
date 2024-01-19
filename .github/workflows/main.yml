@@ -50,6 +50,7 @@ jobs:
         with:
           script: |
             try {
+              const fs = require('fs')
               const filePath = 'analyis_report.html'
               const reportContent = fs.readFileSync(filePath)
               const result = await github.rest.issues.createComment({
