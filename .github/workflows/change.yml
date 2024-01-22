@@ -1,0 +1,14 @@
+name: Change
+
+on:
+  workflow_dispatch:
+
+jobs:
+  my_changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check python file
+        run: |
+         chmod +x ./.github/scripts/temp.py
+         output=python3 ./.github/scripts/temp.py
+      
