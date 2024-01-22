@@ -15,11 +15,8 @@ jobs:
         architecture: ["", "x86","x86_64","arm64-v8a"]
 
     steps:
-      - name: Download base-commit
+      - name: Checkout the code
         uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.base.sha }}
-          path: base-commit
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -37,13 +34,12 @@ jobs:
             /usr/local/lib/android/sdk/system-images
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
 
-      - name: Build release APK for base brancb
+      - name: Build release APK for head branch
         run: |
-          cd base-commit
           ./gradlew assembleRelease
           all_paths=$(find . -type f -name "*.apk")
           echo "all_paths: $all_paths"
-          mv base-commit/app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
+          mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-head-apk.apk
 
       - name: apk name
         run: |
@@ -58,8 +54,8 @@ jobs:
       - name: Upload release APK
         uses: actions/upload-artifact@v3
         with:
-          name: release-base-apk.apk
-          path: app/build/outputs/apk/release/release-base-apk.apk
+          name: release-head-apk.apk
+          path: app/build/outputs/apk/release/release-head-apk.apk
 
       - name: Build release APK for ARM64_V8A
         run: |
@@ -72,21 +68,25 @@ jobs:
           name: release-base-arm64-v8a-ak.apk
           path: app/build/outputs/apk/release/release-base-arm64-v8a-ak.apk
 
-      - name: Checkout to head branch
+      - name: Download base-commit
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base-commit
 
-      - name: Build Release APK for head branch
+      - name: Build Release APK for base branch
         run: |
+          cd base-commit
           ./gradlew assembleRelease
-          mv app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-head-apk.apk
+          mv base-commit/app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
           all_paths=$(find . -type f -name "*.apk")
           echo "all_paths:$all_paths"
 
-      - name: Upload the release head APK
+      - name: Upload the release base APK
         uses: actions/upload-artifact@v3
         with:
-          name: release-head-apk.apk
-          path: app/build/outputs/apk/release/release-head-apk.apk
+          name: release-base-apk.apk
+          path: app/build/outputs/apk/release/release-base-apk.apk
           
   apk_size_analysis_report:
     name: APK size analysis report
