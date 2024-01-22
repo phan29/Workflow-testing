@@ -1,11 +1,7 @@
 name: Main
 
 on:
-  pull_request:
-    branches:
-      - "*"
-    types:
-      - closed
+  workflow_dispatch:
 
 env:
   analysis_report_file: analyis_report.html
