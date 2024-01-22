@@ -42,8 +42,9 @@ jobs:
         || steps.reading_output.outcome == 'success' }}
       id: frame_html
       run: |
+         output=python3 ./.github/scripts/temp.py
          echo "<html><body><h2> html file</h2></body></html>" >> ${{ env.analysis_report_file }}
-         echo "${{ env.analysis_report_file }}" >> $GITHUB_STEP_SUMMARY
+         echo "$output" >> $GITHUB_STEP_SUMMARY
 
     - name: Add PR comment
       uses: actions/github-script@v6
