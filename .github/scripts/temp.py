@@ -1,0 +1,2 @@
+text = "happy"
+print(text)
