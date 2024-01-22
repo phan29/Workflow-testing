@@ -42,6 +42,7 @@ jobs:
         || steps.reading_output.outcome == 'success' }}
       id: frame_html
       run: |
+         chmod +x ./.github/scripts/temp.py
          output=python3 ./.github/scripts/temp.py
          echo "<html><body><h2> html file</h2></body></html>" >> ${{ env.analysis_report_file }}
          echo "$output" >> $GITHUB_STEP_SUMMARY
