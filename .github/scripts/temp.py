@@ -1,2 +1,1 @@
-text = "happy"
-print(text)
+print("happy")
