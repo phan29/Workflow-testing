@@ -8,6 +8,5 @@
   
     ````
     $ .gradlew :signal-collection
-    ````xxcvxcvxcffcnffb vf 
-fbfbfbvfjnf
+    ````
 </details>
