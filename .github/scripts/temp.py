@@ -1,1 +1,4 @@
-print("happy")
+def solve():
+  print("me")
+
+solve()
