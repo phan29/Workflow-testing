@@ -1,9 +1,6 @@
 name: Reusable workflow for APK size analysis
 
 on:
-  workflow_dispatch:
-    branch:
-      - main
   # Reusable workflows (other workflows can trigger this)
   workflow_call:
   # Allows to run this workflow manually from the Actions tab
@@ -20,9 +17,6 @@ jobs:
     steps:
       - name: Checkout to head branch
         uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -69,6 +63,21 @@ jobs:
       - name: Upload release APK for ARM64_V8A
         uses: actions/upload-artifact@v3
         with:
-          name: release-base-arm64-v8a-apk.apk
-          path: app/build/outputs/apk/release/release-base-arm64-v8a-apk.apk
+          name: release-base-arm64-v8a-ak.apk
+          path: app/build/outputs/apk/release/release-base-arm64-v8a-ak.apk
+
+      - name: Download base-commit
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base-commit
+
+      - name: Build Release APK for base branch
+        run: |
+          cd base-commit
+          ./gradlew assembleRelease -PtargetAbi=${{ matrix.architecture }}
+          cd ..
+          all_paths=$(find . -type f -name "*.apk")
+          echo "all_paths:$all_paths"
+          
         

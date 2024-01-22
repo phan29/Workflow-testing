@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Generate report
         id: generate-report
-        run: |
+        run: dfbdxb
           ans="answer to the question"
           echo "::set-output name=ans::$ans"
         
