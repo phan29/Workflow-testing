@@ -12,7 +12,8 @@ jobs:
         
       - name: check python file
         run: |
-         output=python3 ./.github/scripts/temp.py
-         echo "output: $output"
-         echo "$output" >> $GITHUB_STEP_SUMMARY
+          chmod +x ./.github/scripts/temp.py
+          output=python3 ./.github/scripts/temp.py
+          echo "output: $output"
+          echo "$output" >> $GITHUB_STEP_SUMMARY
       
