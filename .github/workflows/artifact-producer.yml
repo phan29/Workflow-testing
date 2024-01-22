@@ -44,7 +44,7 @@ jobs:
           cd ..
           all_paths=$(find . -type f -name "*.apk")
           echo "all_paths:$all_paths"
-          mv ./base-commit/app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
+          mv base-commit/app/build/outputs/apk/release/app-release-unsigned.apk base-commit/app/build/outputs/apk/release/release-base-apk.apk
 
       - name: upload release base apk
         uses: actions/upload-artifact@v3
