@@ -9,5 +9,4 @@
     ````
     $ .gradlew :signal-collection
     ````
-    idbkfnbfbnrgkrmhrkmdjdjdjdjsjfjffif
 </details>
