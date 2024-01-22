@@ -43,7 +43,7 @@ jobs:
       id: frame_html
       run: |
          echo "<html><body><h2> html file</h2></body></html>" >> ${{ env.analysis_report_file }}
-         echo ${{ env.analysis_report_file }} >> $GITHUB_STEP_SUMMARY
+         echo "${{ env.analysis_report_file }}" >> $GITHUB_STEP_SUMMARY
 
     - name: Add PR comment
       uses: actions/github-script@v6
