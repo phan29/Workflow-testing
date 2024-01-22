@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: release-base-apk.apk
-          path: app/build/outputs/apk/release/release-base-apk.apk
+          path: base-commit/app/build/outputs/apk/release/release-base-apk.apk
           
       - name: Checkout the code
         uses: actions/checkout@v3
