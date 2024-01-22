@@ -57,7 +57,6 @@ jobs:
         run: |
           cd base-commit
           ./gradlew assembleRelease
-          mv base-commit/app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/release-base-apk.apk
           all_paths=$(find . -type f -name "*.apk")
           echo "all_paths:$all_paths"
 
