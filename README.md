@@ -9,5 +9,5 @@
     ````
     $ .gradlew :signal-collection
     ````
-    Some changes
+    Some changes for testing
 </details>
