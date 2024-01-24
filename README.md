@@ -9,5 +9,5 @@
     ````
     $ .gradlew :signal-collection
     ````
-    fbfngfnfkblfmbvedant
+    Some changes
 </details>
