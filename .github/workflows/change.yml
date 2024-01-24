@@ -1,7 +1,11 @@
 name: Change
 
 on:
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - "*"
+    types:
+      - closed
 
 jobs:
   my_changes:
